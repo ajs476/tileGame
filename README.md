@@ -2,6 +2,8 @@
 
 Stuff thats still needed: 
       TILES: Object tiles, character tiles, raptors
+      
+      
       ASSETS: Loading screen, sound effects, music, bitmapfonts
 
 
