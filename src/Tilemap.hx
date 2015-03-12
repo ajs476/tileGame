@@ -48,8 +48,8 @@ class Tilemap extends Sprite {
   public var tileHeight(default, null):Int;
   public var orientation(default, null):Orientation;
   public var renderOrder(default, null):RenderOrder;
-  private var _tiles:Array<Tile>;
-  private var _layers:Array<Layer>;
+  public var _tiles:Array<Tile>;
+  public var _layers:Array<Layer>;
   private var _assets:AssetManager;
 
   public function new(assets:AssetManager, xml:String) {
