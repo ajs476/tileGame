@@ -17,6 +17,7 @@ class Game extends Sprite {
 	public function new() {
 		super();
 		createMap();
+		//Move camera on keyboard event
 		Starling.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, moveCamera);
 	}
 
@@ -26,22 +27,23 @@ class Game extends Sprite {
 	}
 
 	public function moveCamera(event:KeyboardEvent) {
-		if(event.keyCode == 68) {
+		//Uses WASD to move the camera
+		if(event.keyCode == 68) { //D Right
 			if(this.x - 64 <= 0) {
 				this.x -= 64;
 			}
 		}
-		if(event.keyCode == 87) {
+		if(event.keyCode == 87) { //S Down
 			if(this.y + 64 <= 0) {
 				this.y += 64;
 			}
 		}
-		if(event.keyCode == 65) {
+		if(event.keyCode == 65) { //A Left
 			if(this.x + 64 <= 0) {
 				this.x += 64;
 			}
 		}
-		if(event.keyCode == 83) {
+		if(event.keyCode == 83) { //W Up
 			if(this.y - 64 <= 0) {
 				this.y -= 64;
 			}
