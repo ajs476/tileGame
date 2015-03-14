@@ -11,13 +11,15 @@ import Tilemap;
 class Game extends Sprite {
 
 	var tileMap:Tilemap;
+	var camera = 
 
 	public function new() {
 		super();
+		createMap();
 	}
 
-	public createMap() {
+	public function createMap() {
 		tileMap = new Tilemap(Root.assets, "map");
-		addChild(tm);
+		addChild(tileMap);
 	}
 }
