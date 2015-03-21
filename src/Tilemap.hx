@@ -26,6 +26,7 @@ private class Tile {
   // properties
 
   public function new() {
+    
   }
 }
 
