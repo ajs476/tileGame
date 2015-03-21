@@ -14,6 +14,7 @@ class Player extends Sprite {
 	var image:Image;
 	public var col = 10;
 	public var row = 5;
+	public var moving = false;
 
 	public function new() {
 		super();
@@ -22,6 +23,7 @@ class Player extends Sprite {
 	}
 
 	public function move(dX:Int, dY:Int) {
+		moving = true;
 		col += Std.int(dX / 64);
 		row += Std.int(dY / 64);
 		Starling.juggler.tween(this, .25, {
@@ -29,7 +31,7 @@ class Player extends Sprite {
             x: this.x + dX, 
             y: this.y + dY,
             onComplete: function() {
-            	cast(this.parent, Game).moving = false;
+            	moving = false;
             }
 		});
 	}
