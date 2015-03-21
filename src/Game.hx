@@ -42,6 +42,7 @@ class Game extends Sprite {
 		//Uses WASD to move the camera
 		if(event.keyCode == 68 && player.col < cols - 1 && tileMap._layers[1].data[player.row][player.col + 1] == null) { //D Right
 			if(this.x - 64 <= 0 && this.x + (64 * cols) > Starling.current.stage.stageWidth && player.col >= 10) {
+				player.moving = true;
 				Starling.juggler.tween(this, .25, {
                         delay: 0.0,
                         x: this.x - 64,

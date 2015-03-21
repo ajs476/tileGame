@@ -41,7 +41,19 @@ class Root extends Sprite {
 		assets.enqueue("assets/win.png");
 		assets.enqueue("assets/Test_Tiles/Tile.png");
 		assets.enqueue("assets/Test_Tiles/Obstacle.png");
+		assets.enqueue("assets/font.png");
+		assets.enqueue("assets/font.fnt");
+		assets.enqueue("assets/basicFont.png");
+		assets.enqueue("assets/basicFont.fnt");
+		assets.enqueue("assets/player_down.png");
+		assets.enqueue("assets/player_up.png");
+		assets.enqueue("assets/player_left.png");
+		assets.enqueue("assets/player_right.png");
 		assets.enqueue("assets/player.png");
+		assets.enqueue("assets/player.xml");
+
+
+
 
 		assets.loadQueue(function onProgress(ratio:Float) {
 			
