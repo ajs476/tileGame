@@ -10,9 +10,12 @@ import starling.events.KeyboardEvent;
 import starling.animation.Tween;
 import Tilemap;
 import Player;
+import Dialog;
 
 class Game extends Sprite {
 
+	var dialog:Dialog;
+	var selection:Selection;
 	var tileMap:Tilemap;
 	var player:Player;
 	var cols = 25;
@@ -21,18 +24,61 @@ class Game extends Sprite {
 	public function new() {
 		super();
 		createMap();
+
 		player = new Player();
 		player.x = 64 * 10;
 		player.y = 64 * 5;
 		addChild(player);
+
 		//Move camera on keyboard event
-		Starling.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, moveCamera);
+		addEventListener(KeyboardEvent.KEY_DOWN, moveCamera);
+
 	}
 
 	public function createMap() {
 		tileMap = new Tilemap(Root.assets, "map");
 		tileMap.y = 32;
 		addChild(tileMap);
+	}
+
+	public function createDialog(text:Array<String>) {
+		removeEventListeners();
+		dialog = new Dialog(text);
+		addChild(dialog);
+		addEventListener(KeyboardEvent.KEY_DOWN, destroyDialog);
+	}
+
+	public function createSelection(options:Array<String>) {
+		removeEventListeners();
+		var functions = [function(str:String) { trace(str); }, function(str:String) { trace(str); }];
+		selection = new Selection(options, functions);
+		addChild(selection);
+		addEventListener(KeyboardEvent.KEY_DOWN, destroySelection);
+	}
+
+	public function destroySelection(event:KeyboardEvent) {
+		if(event.keyCode == 32) {
+			removeEventListeners();
+			selection.activate();
+			removeChild(selection);
+			addEventListener(KeyboardEvent.KEY_DOWN, moveCamera);
+		} else if(event.keyCode == 39) {
+			selection.next();
+		} else if(event.keyCode == 37) {
+			selection.previous();
+		}
+	}
+
+	public function destroyDialog(event:KeyboardEvent) {
+		if(event.keyCode == 32) {
+			if(dialog.currentSlide == dialog.text.length - 1) {
+				removeEventListeners();
+				removeChild(dialog);
+				addEventListener(KeyboardEvent.KEY_DOWN, moveCamera);
+			} else {
+				dialog.next();
+			}
+		}
 	}
 
 	public function moveCamera(event:KeyboardEvent) {

@@ -14,6 +14,7 @@ class Player extends Sprite {
 
 	var image:Image;
 	var animation:MovieClipPlus;
+	var direction = "down";
 	public var col = 10;
 	public var row = 5;
 	public var moving = false;
@@ -33,6 +34,7 @@ class Player extends Sprite {
     	if(dX < 0) direction = "left";
     	if(dY > 0) direction = "down";
     	if(dY < 0) direction = "up";
+    	this.direction = direction;
     	var atlas = Root.assets.getTextureAtlas("player");
 		animation = new MovieClipPlus(atlas.getTextures("player_walking_" + direction), 8);
 		animation.loop = true;
