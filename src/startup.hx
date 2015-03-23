@@ -3,7 +3,7 @@ import flash.display.Sprite;
 import flash.geom.Rectangle;
 import starling.core.Starling;
 
-@:bitmap("assets/loading.png")
+@:bitmap("assets/lcTitle.png")
 class LoadingBitmapdata extends flash.display.BitmapData {
 }
 
