@@ -28,6 +28,7 @@ class Root extends Sprite {
 
 		assets = new AssetManager();
 		assets.enqueue("assets/startbutton.png");
+		assets.enqueue("assets/lcTitle.png");
 		assets.enqueue("assets/continueButton.png");
 		assets.enqueue("assets/tutorialbutton.png");
 		assets.enqueue("assets/credits.png");
@@ -192,24 +193,24 @@ class Menu extends Sprite {
 	public function new() {
 		super();
 
-		var menu = new Image(Root.assets.getTexture("menu"));
+		var menu = new Image(Root.assets.getTexture("lcTitle"));
 		addChild(menu);
 
 		startButton = new Button(Root.assets.getTexture("startbutton"));
 		startButton.name = "start";
-		startButton.x = 250;
-		startButton.y = 200;
+		startButton.x = 150;
+		startButton.y = 100;
 		this.addChild(startButton);
 
-		tutorialButton = new Button(Root.assets.getTexture("tutorialbutton"));
+		/*tutorialButton = new Button(Root.assets.getTexture("tutorialbutton"));
 		tutorialButton.x = 250;
 		tutorialButton.y = 300;
 		tutorialButton.name = "tutorial";
-		this.addChild(tutorialButton);
+		this.addChild(tutorialButton);*/
 
 		creditsButton = new Button(Root.assets.getTexture("creditsbutton"));
-		creditsButton.x = 250;
-		creditsButton.y = 400;
+		creditsButton.x = 150;
+		creditsButton.y = 200;
 		creditsButton.name = "credits";
 		this.addChild(creditsButton);
 	}
