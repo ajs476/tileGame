@@ -29,9 +29,9 @@ class Player extends Sprite {
 		addChild(image);
 	}
 
-	public function move(dX:Int, dY:Int) {
+	public function move(dX:Int, dY:Int, d="") {
 		removeChild(image);
-    	var direction = "";
+    	var direction = d;
     	if(dX > 0) direction = "right";
     	if(dX < 0) direction = "left";
     	if(dY > 0) direction = "down";

@@ -101,6 +101,17 @@ class Game extends Sprite {
 			}
 			player.move(64, 0);
 		}
+		// D Right  -- change direction of player when hitting an obstacle
+		else if (event.keyCode == 68 && player.row > 0) {
+			Starling.juggler.tween(this, .25, { 
+					delay: 0.0, 
+					y: this.y, 
+					onComplete: function() { 
+						player.moving = false; 
+					}
+			});
+			player.move(0, 0, "right");
+		}
 		if(event.keyCode == 87 && player.row > 0 && tileMap._layers[1].data[player.row - 1][player.col] == null) { //W Up
 			if(this.y + 64 <= 0 && /*this.y + (64 * rows) >= Starling.current.stage.stageHeight &&*/ player.row <= rows - 6) { //commented section because it was causing problems with camera moving up when you are near bottom of map
 				Starling.juggler.tween(this, .25, {
@@ -112,6 +123,17 @@ class Game extends Sprite {
         		});
 			}
 			player.move(0, -64);
+		}
+		// W Up -- change direction of player when hitting an obstacle
+		else if (event.keyCode == 87 && player.row > 0) {
+			Starling.juggler.tween(this, .25, { 
+					delay: 0.0, 
+					y: this.y, 
+					onComplete: function() { 
+						player.moving = false; 
+					}
+			});
+			player.move(0, 0, "up");
 		}
 		if(event.keyCode == 65 && player.col > 0 && tileMap._layers[1].data[player.row][player.col - 1] == null) { //A Left
 			if(this.x + 64 <= 0  && this.x + (64 * cols) >= Starling.current.stage.stageWidth && player.col <= cols - 10) {
@@ -125,6 +147,17 @@ class Game extends Sprite {
 			}
 			player.move(-64, 0);
 		}
+		// A Left -- change direction of player when hitting an obstacle
+		else if (event.keyCode == 65 && player.row > 0) {
+			Starling.juggler.tween(this, .25, { 
+					delay: 0.0, 
+					y: this.y, 
+					onComplete: function() { 
+						player.moving = false; 
+					}
+			});
+			player.move(0, 0, "left");
+		}
 		if(event.keyCode == 83 && player.row < rows - 1 && tileMap._layers[1].data[player.row + 1][player.col] == null) { //S Down
 			if(this.y - 64 <= 0 && this.y + (64 * rows) > Starling.current.stage.stageHeight && player.row >= 5) {
 				Starling.juggler.tween(this, .25, {
@@ -136,6 +169,17 @@ class Game extends Sprite {
         		});
 			}
 			player.move(0, 64);
+		}
+		// S Down -- change direction of player when hitting an obstacle
+		else if (event.keyCode == 83 && player.row > 0) {
+			Starling.juggler.tween(this, .25, { 
+					delay: 0.0, 
+					y: this.y, 
+					onComplete: function() { 
+						player.moving = false; 
+					}
+			});
+			player.move(0, 0, "down");
 		}
 	}
 }
