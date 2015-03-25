@@ -44,6 +44,8 @@ class Game extends Sprite {
 		addChild(raptor);
 		raptor.patrol();
 
+		createDialog(["This is a test.", "Press space to continue."]);
+
 	}
 
 	public function createMap() {
