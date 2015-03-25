@@ -113,7 +113,7 @@ class Game extends Sprite {
 			player.move(64, 0);
 		}
 		// D Right  -- change direction of player when hitting an obstacle
-		else if (event.keyCode == 68 && player.row > 0) {
+		else if (event.keyCode == 68) {
 			Starling.juggler.tween(this, .25, { 
 					delay: 0.0, 
 					y: this.y, 
@@ -136,7 +136,7 @@ class Game extends Sprite {
 			player.move(0, -64);
 		}
 		// W Up -- change direction of player when hitting an obstacle
-		else if (event.keyCode == 87 && player.row > 0) {
+		else if (event.keyCode == 87) {
 			Starling.juggler.tween(this, .25, { 
 					delay: 0.0, 
 					y: this.y, 
@@ -159,7 +159,7 @@ class Game extends Sprite {
 			player.move(-64, 0);
 		}
 		// A Left -- change direction of player when hitting an obstacle
-		else if (event.keyCode == 65 && player.row > 0) {
+		else if (event.keyCode == 65) {
 			Starling.juggler.tween(this, .25, { 
 					delay: 0.0, 
 					y: this.y, 
@@ -182,7 +182,7 @@ class Game extends Sprite {
 			player.move(0, 64);
 		}
 		// S Down -- change direction of player when hitting an obstacle
-		else if (event.keyCode == 83 && player.row > 0) {
+		else if (event.keyCode == 83) {
 			Starling.juggler.tween(this, .25, { 
 					delay: 0.0, 
 					y: this.y, 
