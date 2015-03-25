@@ -100,7 +100,7 @@ class Game extends Sprite {
 			player.move(64, 0);
 		}
 		if(event.keyCode == 87 && player.row > 0 && tileMap._layers[1].data[player.row - 1][player.col] == null) { //W Up
-			if(this.y + 64 <= 0 && this.y + (64 * rows) >= Starling.current.stage.stageHeight && player.row <= rows - 6) {
+			if(this.y + 64 <= 0 && /*this.y + (64 * rows) >= Starling.current.stage.stageHeight &&*/ player.row <= rows - 6) { //commented section because it was causing problems with camera moving up when you are near bottom of map
 				Starling.juggler.tween(this, .25, {
                         delay: 0.0,
                         y: this.y + 64,
