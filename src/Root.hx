@@ -27,6 +27,7 @@ class Root extends Sprite {
 	public function start(startup:Startup) {
 
 		assets = new AssetManager();
+		assets.enqueue("assets/Test_Tiles/map.tmx");
 		assets.enqueue("assets/startbutton.png");
 		assets.enqueue("assets/lcTitle.png");
 		assets.enqueue("assets/continueButton.png");
