@@ -16,7 +16,8 @@ $(APP).swf: $(SOURCES)
 		-swf-header 960:520:60:ffffff \
 		-main Startup \
 		-swf $(APP).swf \
-		-swf-lib vendor/starling.swc --macro "patchTypes('vendor/starling.patch')"
+		-swf-lib vendor/starling.swc --macro "patchTypes('vendor/starling.patch')" \
+		-resource assets/Test_Tiles/map.tmx@"map"
 
 clean:
 	rm -rf $(APP).swf
