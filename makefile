@@ -1,4 +1,4 @@
-FLEX_SDK = C:/Flex
+FLEX_SDK ?= /Users/lorimcdaniel/ApacheFlex
 
 APP=game
 APP_XML=$(APP).xml
@@ -13,16 +13,16 @@ $(APP).swf: $(SOURCES)
 		-cp src \
 		-cp vendor \
 		-swf-version 11.8 \
-		-swf-header 960:520:60:ffffff \
+		-swf-header 1280:720:60:ffffff \
 		-main Startup \
 		-swf $(APP).swf \
-		-swf-lib vendor/starling.swc --macro "patchTypes('vendor/starling.patch')" \
+		-swf-lib vendor/starling_1_6.swc --macro "patchTypes('vendor/starling.patch')" \
 		-resource assets/Test_Tiles/map.tmx@"map"
 
 clean:
 	rm -rf $(APP).swf
 
 test: $(APP).swf
-	$(ADL) -profile tv -screensize 960x520:960x520 $(APP_XML)
+	$(ADL) -profile tv -screensize 1280x720:1280x720 $(APP_XML)
 
 
