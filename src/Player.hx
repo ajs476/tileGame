@@ -12,7 +12,7 @@ import MovieClipPlus;
 
 class Player extends Sprite {
 
-	var image:Image;
+	public var image:Image;
 	var animation:MovieClipPlus;
 	var direction = "down";
 	public var col = 10;
@@ -24,6 +24,8 @@ class Player extends Sprite {
 	public function new() {
 		super();
 		image = new Image(Root.assets.getTexture("player_down"));
+		image.width = 64;
+		image.height = 64;
 		addChild(image);
 	}
 

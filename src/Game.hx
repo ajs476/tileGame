@@ -8,6 +8,7 @@ import starling.display.Image;
 import starling.display.DisplayObject;
 import starling.events.KeyboardEvent;
 import starling.animation.Tween;
+import flash.geom.Rectangle;
 import Tilemap;
 import Player;
 import Dialog;
@@ -18,6 +19,7 @@ class Game extends Sprite {
 	var selection:Selection;
 	var tileMap:Tilemap;
 	var player:Player;
+	var raptor:Raptor;
 	var cols = 25;
 	var rows = 20;
 
