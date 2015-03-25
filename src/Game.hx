@@ -35,6 +35,17 @@ class Game extends Sprite {
 		//Move camera on keyboard event
 		addEventListener(KeyboardEvent.KEY_DOWN, moveCamera);
 
+		var raptor = new Raptor();
+		raptor.col = 6;
+		raptor.row = 6;
+		raptor.x = 6 * 64;
+		raptor.y = 6 * 64;
+		raptor.route = [[6, 6], [11, 6]];
+		addChild(raptor);
+		raptor.patrol();
+
+		createDialog(["This is a test.", "Press space to continue."]);
+
 	}
 
 	public function createMap() {
