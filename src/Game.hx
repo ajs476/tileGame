@@ -33,7 +33,7 @@ class Game extends Sprite {
 		addChild(player);
 
 		//Move camera on keyboard event
-		//addEventListener(KeyboardEvent.KEY_DOWN, moveCamera);
+		addEventListener(KeyboardEvent.KEY_DOWN, moveCamera);
 
 		var raptor = new Raptor();
 		raptor.col = 6;
