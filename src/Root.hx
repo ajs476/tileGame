@@ -27,7 +27,7 @@ class Root extends Sprite {
 	public function start(startup:Startup) {
 
 		assets = new AssetManager();
-		assets.enqueue("assets/Test_Tiles/map.tmx");
+		assets.enqueue("assets/map.tmx");
 		assets.enqueue("assets/startbutton.png");
 		assets.enqueue("assets/lcTitle.png");
 		assets.enqueue("assets/continueButton.png");
@@ -41,8 +41,6 @@ class Root extends Sprite {
 		assets.enqueue("assets/tutorialBackground.png");
 		assets.enqueue("assets/gameover.png");
 		assets.enqueue("assets/win.png");
-		assets.enqueue("assets/Test_Tiles/Tile.png");
-		assets.enqueue("assets/Test_Tiles/Obstacle.png");
 		assets.enqueue("assets/dialog.png");
 		assets.enqueue("assets/font.png");
 		assets.enqueue("assets/font.fnt");
@@ -54,6 +52,8 @@ class Root extends Sprite {
 		assets.enqueue("assets/player_right.png");
 		assets.enqueue("assets/player.png");
 		assets.enqueue("assets/player.xml");
+		assets.enqueue("assets/tiles.png");
+		assets.enqueue("assets/tiles.xml");
 
 
 

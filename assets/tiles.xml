@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:6ae16256ff9bda6ac672a5c277fecdb2:4350e56519d951dba447281f8588eb5a:8c35c81d6c02a4e8a52d04a540c911af$ -->
+<TextureAtlas imagePath="tiles.png">
+    <SubTexture name="addingsandleft" x="2" y="2" width="64" height="64"/>
+    <SubTexture name="addingsandleft_1" x="2" y="2" width="64" height="64"/>
+    <SubTexture name="addingsandright" x="68" y="2" width="64" height="64"/>
+    <SubTexture name="addingsandright_1" x="68" y="2" width="64" height="64"/>
+    <SubTexture name="addingsandtop" x="134" y="2" width="64" height="64"/>
+    <SubTexture name="addingsandtop_1" x="134" y="2" width="64" height="64"/>
+    <SubTexture name="beach" x="200" y="2" width="64" height="64"/>
+    <SubTexture name="beach2" x="266" y="2" width="64" height="64"/>
+    <SubTexture name="beach2_1" x="266" y="2" width="64" height="64"/>
+    <SubTexture name="beach3" x="332" y="2" width="64" height="64"/>
+    <SubTexture name="beach3_1" x="332" y="2" width="64" height="64"/>
+    <SubTexture name="beach4" x="398" y="2" width="64" height="64"/>
+    <SubTexture name="beach4_1" x="398" y="2" width="64" height="64"/>
+    <SubTexture name="beach_1" x="200" y="2" width="64" height="64"/>
+    <SubTexture name="building" x="464" y="2" width="64" height="64"/>
+    <SubTexture name="building2" x="530" y="2" width="64" height="64"/>
+    <SubTexture name="building3" x="596" y="2" width="64" height="64"/>
+    <SubTexture name="building4" x="662" y="2" width="64" height="64"/>
+    <SubTexture name="corner" x="2" y="68" width="64" height="64"/>
+    <SubTexture name="corner2" x="68" y="68" width="64" height="64"/>
+    <SubTexture name="corner3" x="134" y="68" width="64" height="64"/>
+    <SubTexture name="corner4" x="200" y="68" width="64" height="64"/>
+    <SubTexture name="grass" x="266" y="68" width="64" height="64"/>
+    <SubTexture name="grassand" x="332" y="68" width="64" height="64"/>
+    <SubTexture name="grasscorner" x="398" y="68" width="64" height="64"/>
+    <SubTexture name="grasscorner2" x="464" y="68" width="64" height="64"/>
+    <SubTexture name="grasscorner3" x="530" y="68" width="64" height="64"/>
+    <SubTexture name="grasscorner4" x="596" y="68" width="64" height="64"/>
+    <SubTexture name="pillar" x="662" y="68" width="64" height="64"/>
+    <SubTexture name="pillar2" x="2" y="134" width="64" height="64"/>
+    <SubTexture name="sand" x="68" y="134" width="64" height="64"/>
+    <SubTexture name="sandcorner" x="134" y="134" width="64" height="64"/>
+    <SubTexture name="sandcorner2" x="200" y="134" width="64" height="64"/>
+    <SubTexture name="sandcorner3" x="266" y="134" width="64" height="64"/>
+    <SubTexture name="sandcorner4" x="332" y="134" width="64" height="64"/>
+    <SubTexture name="water" x="398" y="134" width="64" height="64"/>
+    <SubTexture name="watercorner" x="464" y="134" width="64" height="64"/>
+    <SubTexture name="watercorner2" x="530" y="134" width="64" height="64"/>
+    <SubTexture name="watercorner3" x="596" y="134" width="64" height="64"/>
+    <SubTexture name="watercorner4" x="662" y="134" width="64" height="64"/>
+</TextureAtlas>

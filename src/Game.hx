@@ -20,8 +20,8 @@ class Game extends Sprite {
 	var tileMap:Tilemap;
 	var player:Player;
 	var raptor:Raptor;
-	var cols = 25;
-	var rows = 20;
+	var cols = 50;
+	var rows = 50;
 
 	public function new() {
 		super();
@@ -33,7 +33,7 @@ class Game extends Sprite {
 		addChild(player);
 
 		//Move camera on keyboard event
-		addEventListener(KeyboardEvent.KEY_DOWN, moveCamera);
+		//addEventListener(KeyboardEvent.KEY_DOWN, moveCamera);
 
 		var raptor = new Raptor();
 		raptor.col = 6;
