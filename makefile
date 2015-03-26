@@ -1,4 +1,4 @@
-FLEX_SDK ?= /Users/lorimcdaniel/ApacheFlex
+FLEX_SDK ?= C:/Flex
 
 APP=game
 APP_XML=$(APP).xml
