@@ -52,6 +52,12 @@ class Root extends Sprite {
 		assets.enqueue("assets/player_right.png");
 		assets.enqueue("assets/player.png");
 		assets.enqueue("assets/player.xml");
+		assets.enqueue("assets/raptor_down.png");
+		assets.enqueue("assets/raptor_up.png");
+		assets.enqueue("assets/raptor_left.png");
+		assets.enqueue("assets/raptor_right.png");
+		assets.enqueue("assets/raptor.png");
+		assets.enqueue("assets/raptor.xml");
 		assets.enqueue("assets/tiles.png");
 		assets.enqueue("assets/tiles.xml");
 

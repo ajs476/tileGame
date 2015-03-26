@@ -40,7 +40,7 @@ class Game extends Sprite {
 		raptor.row = 6;
 		raptor.x = 6 * 64;
 		raptor.y = 6 * 64;
-		raptor.route = [[6, 6], [11, 6]];
+		raptor.route = [[6, 6], [6, 11], [6, 6], [11, 6]];
 		addChild(raptor);
 		raptor.patrol();
 

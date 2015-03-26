@@ -25,7 +25,7 @@ class Raptor extends Sprite {
 
 	public function new() {
 		super();
-		image = new Image(Root.assets.getTexture("player_down"));
+		image = new Image(Root.assets.getTexture("raptor_down"));
 		image.width = 64;
 		image.height = 64;
 		addChild(image);
@@ -55,8 +55,8 @@ class Raptor extends Sprite {
 	    	if(dY > 0) direction = "down";
 	    	if(dY < 0) direction = "up";
 	    	this.direction = direction;
-	    	var atlas = Root.assets.getTextureAtlas("player");
-			animation = new MovieClipPlus(atlas.getTextures("player_walking_" + direction), 8);
+	    	var atlas = Root.assets.getTextureAtlas("raptor");
+			animation = new MovieClipPlus(atlas.getTextures("raptor_walking_" + direction), 8);
 			animation.loop = true;
 			addChild(animation);
 			animation.play();
@@ -71,7 +71,7 @@ class Raptor extends Sprite {
 	            onComplete: function() {
 	            	removeChild(animation);
 	            	moving = false;
-	            	image = new Image(Root.assets.getTexture("player_" + direction));
+	            	image = new Image(Root.assets.getTexture("raptor_" + direction));
 	            	addChild(image);
 	            	dispatchEvent(new Event("moveFinished"));
 	            }
