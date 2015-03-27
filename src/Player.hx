@@ -9,6 +9,8 @@ import starling.display.DisplayObject;
 import starling.events.KeyboardEvent;
 import starling.animation.Tween;
 import MovieClipPlus;
+import flash.geom.Rectangle;
+
 
 class Player extends Sprite {
 
@@ -32,6 +34,7 @@ class Player extends Sprite {
 	public function move(dX:Int, dY:Int, d="") {
 		removeChild(image);
     	var direction = d;
+	var i:Int = 0;
     	if(dX > 0) direction = "right";
     	if(dX < 0) direction = "left";
     	if(dY > 0) direction = "down";
