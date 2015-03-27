@@ -61,6 +61,7 @@ class Root extends Sprite {
 		assets.enqueue("assets/raptor.xml");
 		assets.enqueue("assets/tiles.png");
 		assets.enqueue("assets/tiles.xml");
+		assets.enqueue("assets/gameOver.png");
 
 		assets.enqueue("assets/music1.mp3");
 		assets.enqueue("assets/roar.mp3");
@@ -98,13 +99,20 @@ class Root extends Sprite {
                         alpha: 1.0
         });
 	}
+	
+	public function addContinue(){
+	
+		var cScreen = new ContinueScreen();
+		cScreen.alpha = 0;
+		addChild(cScreen);
+	}
 
 	public function menuButtonClicked(event:Event) {
 		var button = cast(event.target, Button);
 		var menuSelect:SoundChannel = Root.assets.playSound("menuselect");
 		menuSelect;
 		if(button.name == "start") {
-			assets.playSound("music1", 0, 100);
+			assets.playSound("music1", 0, 100000);
 			startGame();
 		} 
 		else if(button.name == "tutorial") {
@@ -233,7 +241,7 @@ class ContinueScreen extends Sprite {
 	public function  new() {
 		super();
 
-		background = new Image(Root.assets.getTexture("continue"));
+		background = new Image(Root.assets.getTexture("gameOver"));
 		addChild(background);
 
 		nextButton = new Button(Root.assets.getTexture("continueButton"));

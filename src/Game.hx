@@ -24,7 +24,6 @@ class Game extends Sprite {
 	var rows = 50;
 	var raptors:Array<Raptor>;
 
-
 	public function new() {
 		super();
 		createMap();
@@ -72,7 +71,6 @@ class Game extends Sprite {
 		
 		
 		set_raptors(raptors);
-		
 		
 		// randomly spawn the same number of missles, pick up a missle to kill raptor (press space to shoot missle)
 		// createMissle();
@@ -165,8 +163,11 @@ class Game extends Sprite {
 		var playerBounds:Rectangle = player.bounds;
 		while(i<10){
 			var raptorBounds:Rectangle = raptors[i].bounds;
-			if (playerBounds.intersects(raptorBounds))
-				trace("GAME OVER");
+			if (playerBounds.intersects(raptorBounds)){
+				removeChildren();
+				removeEventListeners();
+				Root.assets.playSound("roar", 0, 1);
+			}
 			i = i+1;
 		}
 		if(player.moving) {
