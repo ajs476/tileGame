@@ -167,6 +167,7 @@ class Game extends Sprite {
 				removeChildren();
 				removeEventListeners();
 				Root.assets.playSound("roar", 0, 1);
+				// Root.addContinue();
 			}
 			i = i+1;
 		}
