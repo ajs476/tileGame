@@ -13,15 +13,17 @@ import Tilemap;
 import Player;
 import Dialog;
 
+
 class Game extends Sprite {
 
 	var dialog:Dialog;
 	var selection:Selection;
 	var tileMap:Tilemap;
 	var player:Player;
-	var raptor:Raptor;
 	var cols = 50;
 	var rows = 50;
+	var raptors:Array<Raptor>;
+
 
 	public function new() {
 		super();
@@ -31,22 +33,86 @@ class Game extends Sprite {
 		player.x = 64 * 10;
 		player.y = 64 * 5;
 		addChild(player);
-
+		
 		//Move camera on keyboard event
 		addEventListener(KeyboardEvent.KEY_DOWN, moveCamera);
 
-		var raptor = new Raptor();
+		// randomly spawn a bunch of raptors. kill all raptors to win!
+		var raptors:Array<Raptor> = new Array<Raptor>();
+		var raptor0 = new Raptor();
+		raptors[0] = raptor0;
+		createRaptor(raptor0);
+		var raptor1 = new Raptor();
+		raptors[1] = raptor1;
+		createRaptor(raptor1);
+		var raptor2 = new Raptor();
+		raptors[2] = raptor2;
+		createRaptor(raptor2);
+		var raptor3 = new Raptor();
+		raptors[3] = raptor3;
+		createRaptor(raptor3);
+		var raptor4 = new Raptor();
+		raptors[4] = raptor4;
+		createRaptor(raptor4);
+		var raptor5 = new Raptor();
+		raptors[5] = raptor5;
+		createRaptor(raptor5);
+		var raptor6 = new Raptor();
+		raptors[6] = raptor6;
+		createRaptor(raptor6);
+		var raptor7 = new Raptor();
+		raptors[7] = raptor7;
+		createRaptor(raptor7);
+		var raptor8 = new Raptor();
+		raptors[8] = raptor8;
+		createRaptor(raptor8);
+		var raptor9 = new Raptor();
+		raptors[9] = raptor9;
+		createRaptor(raptor9);
+		
+		
+		set_raptors(raptors);
+		
+		
+		// randomly spawn the same number of missles, pick up a missle to kill raptor (press space to shoot missle)
+		// createMissle();
+		// createMissle();
+		// createMissle();
+		// createMissle();
+		// createMissle();
+		// createMissle();
+		// createMissle();
+		// createMissle();
+		// createMissle();
+		// createMissle();
+		// createMissle();
+		// createMissle();
+		// createMissle();
+		// createMissle();
+
+		createDialog(["Press space to continue."]);
+
+	}
+	
+	function set_raptors(newX:Array<Raptor>) {
+		return raptors = newX;
+	}
+	
+	// call this to randomly spawn a raptor
+	public function createRaptor(raptor:Raptor){
+		var rand = Math.ceil(Math.random()*720);
+		var rand2 = Math.ceil(Math.random()*480);
+		
 		raptor.col = 6;
 		raptor.row = 6;
-		raptor.x = 6 * 64;
-		raptor.y = 6 * 64;
+		raptor.x = 6 * rand;
+		raptor.y = 6 * rand2;
 		raptor.route = [[6, 6], [6, 11], [6, 6], [11, 6]];
 		addChild(raptor);
 		raptor.patrol();
-
-		createDialog(["This is a test.", "Press space to continue."]);
-
 	}
+	
+	
 
 	public function createMap() {
 		tileMap = new Tilemap(Root.assets, "map");
@@ -95,6 +161,14 @@ class Game extends Sprite {
 	}
 
 	public function moveCamera(event:KeyboardEvent) {
+		var i:Int = 0;
+		var playerBounds:Rectangle = player.bounds;
+		while(i<10){
+			var raptorBounds:Rectangle = raptors[i].bounds;
+			if (playerBounds.intersects(raptorBounds))
+				trace("GAME OVER");
+			i = i+1;
+		}
 		if(player.moving) {
 			return;
 		}
@@ -179,7 +253,7 @@ class Game extends Sprite {
         				}
         		});
 			}
-			player.move(0, 64);
+			player.move(0, 64, "");
 		}
 		// S Down -- change direction of player when hitting an obstacle
 		else if (event.keyCode == 83) {

@@ -19,6 +19,7 @@ class Root extends Sprite {
 
 	public static var assets:AssetManager;
 	public var game:Game;
+	public var music1:SoundChannel;
 
 	public function new() {
 		super();
@@ -61,7 +62,8 @@ class Root extends Sprite {
 		assets.enqueue("assets/tiles.png");
 		assets.enqueue("assets/tiles.xml");
 
-
+		assets.enqueue("assets/music1.mp3");
+		assets.enqueue("assets/roar.mp3");
 
 
 		assets.loadQueue(function onProgress(ratio:Float) {
@@ -102,6 +104,7 @@ class Root extends Sprite {
 		var menuSelect:SoundChannel = Root.assets.playSound("menuselect");
 		menuSelect;
 		if(button.name == "start") {
+			assets.playSound("music1", 0, 100);
 			startGame();
 		} 
 		else if(button.name == "tutorial") {
