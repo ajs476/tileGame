@@ -35,6 +35,7 @@ class Root extends Sprite {
 		assets.enqueue("assets/tutorialbutton.png");
 		assets.enqueue("assets/credits.png");
 		assets.enqueue("assets/backbutton.png");
+		assets.enqueue("assets/backbuttonhover.png");
 		assets.enqueue("assets/creditsbutton.png");
 		assets.enqueue("assets/menu.png");
 		assets.enqueue("assets/menubutton.png");
@@ -287,8 +288,10 @@ class Credits extends Sprite {
 		addChild(creditsBackground);
 		this.addChild(backButton);
 
-		backButton.x = 50;
-		backButton.y = 520;
+		backButton.x = 570;
+		backButton.y = 465;
+		backButton.overState = Root.assets.getTexture("backbuttonhover");
+		backButton.downState = Root.assets.getTexture("backbuttonhover");
 	}
 }
 
