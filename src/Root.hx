@@ -20,6 +20,7 @@ class Root extends Sprite {
 	public static var assets:AssetManager;
 	public var game:Game;
 	public var music1:SoundChannel;
+	public var menuSound = null;
 
 	public function new() {
 		super();
@@ -66,8 +67,8 @@ class Root extends Sprite {
 
 		assets.enqueue("assets/music1.mp3");
 		assets.enqueue("assets/roar.mp3");
-
-
+		assets.enqueue("assets/menu.mp3");
+        
 		assets.loadQueue(function onProgress(ratio:Float) {
 			
             if (ratio == 1) {
@@ -93,6 +94,7 @@ class Root extends Sprite {
 		var menu = new Menu();
 		menu.alpha = 0;
 		addChild(menu);
+		if (menuSound == null) menuSound = assets.playSound("menu", 0, 1000);
 		//Tween in menu
 		Starling.juggler.tween(menu, 0.25, {
                     transition: Transitions.EASE_IN,
@@ -113,6 +115,7 @@ class Root extends Sprite {
 		var menuSelect:SoundChannel = Root.assets.playSound("menuselect");
 		menuSelect;
 		if(button.name == "start") {
+			menuSound.stop();
 			assets.playSound("music1", 0, 100000);
 			startGame();
 		} 
