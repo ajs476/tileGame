@@ -33,6 +33,7 @@ class Root extends Sprite {
 		assets = new AssetManager();
 		assets.enqueue("assets/map.tmx");
 		assets.enqueue("assets/startbutton.png");
+		assets.enqueue("assets/startbuttonhover.png");
 		assets.enqueue("assets/lcTitle.png");
 		assets.enqueue("assets/continueButton.png");
 		assets.enqueue("assets/tutorialbutton.png");
@@ -40,6 +41,7 @@ class Root extends Sprite {
 		assets.enqueue("assets/backbutton.png");
 		assets.enqueue("assets/backbuttonhover.png");
 		assets.enqueue("assets/creditsbutton.png");
+		assets.enqueue("assets/creditsbuttonhover.png");
 		assets.enqueue("assets/menu.png");
 		assets.enqueue("assets/menubutton.png");
 		assets.enqueue("assets/menuselect.mp3");
@@ -257,7 +259,8 @@ class Menu extends Sprite {
 		startButton = new Button(Root.assets.getTexture("startbutton"));
 		startButton.name = "start";
 		startButton.x = 150;
-		startButton.y = 100;
+		startButton.y = 150;
+		startButton.downState = startButton.overState = Root.assets.getTexture("startbuttonhover");
 		this.addChild(startButton);
 
 		/*tutorialButton = new Button(Root.assets.getTexture("tutorialbutton"));
@@ -268,8 +271,9 @@ class Menu extends Sprite {
 
 		creditsButton = new Button(Root.assets.getTexture("creditsbutton"));
 		creditsButton.x = 150;
-		creditsButton.y = 200;
+		creditsButton.y = 250;
 		creditsButton.name = "credits";
+		creditsButton.downState = creditsButton.overState = Root.assets.getTexture("creditsbuttonhover");
 		this.addChild(creditsButton);
 	}
 }
