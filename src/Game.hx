@@ -29,7 +29,7 @@ class Game extends Sprite {
 		super();
 		createMap();
 
-		player = new Player();
+		player = new Player(Root.current_player);
 		player.x = 64 * 10;
 		player.y = 64 * 5;
 		addChild(player);

@@ -21,6 +21,8 @@ class Root extends Sprite {
 	public var game:Game;
 	public var music1:SoundChannel;
 	public var menuSound = null;
+	// using to grab in Game.hx instead of passing to constuctor or passing Root
+	public static var current_player = "";
 
 	public function new() {
 		super();
@@ -54,6 +56,12 @@ class Root extends Sprite {
 		assets.enqueue("assets/player_right.png");
 		assets.enqueue("assets/player.png");
 		assets.enqueue("assets/player.xml");
+		assets.enqueue("assets/player2_down.png");
+		assets.enqueue("assets/player2_up.png");
+		assets.enqueue("assets/player2_left.png");
+		assets.enqueue("assets/player2_right.png");
+		assets.enqueue("assets/player2.png");
+		assets.enqueue("assets/player2.xml");
 		assets.enqueue("assets/raptor_down.png");
 		assets.enqueue("assets/raptor_up.png");
 		assets.enqueue("assets/raptor_left.png");
@@ -63,6 +71,11 @@ class Root extends Sprite {
 		assets.enqueue("assets/tiles.png");
 		assets.enqueue("assets/tiles.xml");
 		assets.enqueue("assets/gameOver.png");
+		assets.enqueue("assets/playerselect.png");
+		assets.enqueue("assets/virginiabutton.png");
+		assets.enqueue("assets/virginiabuttonhover.png");
+		assets.enqueue("assets/samuelbutton.png");
+		assets.enqueue("assets/samuelbuttonhover.png");
 
 		assets.enqueue("assets/music1.mp3");
 		assets.enqueue("assets/roar.mp3");
@@ -114,10 +127,14 @@ class Root extends Sprite {
 		var menuSelect:SoundChannel = Root.assets.playSound("menuselect");
 		menuSelect;
 		if(button.name == "start") {
-			menuSound.stop();
-			assets.playSound("music1", 0, 100000);
-			startGame();
+			selectPlayer();
 		} 
+		else if (button.name == "player2" || button.name == "player") {
+			menuSound.stop();
+		    assets.playSound("music1", 0, 10000);
+			current_player = button.name;
+			startGame();
+	    }
 		else if(button.name == "tutorial") {
 			showTutorial();
 		 }
@@ -161,6 +178,26 @@ class Root extends Sprite {
 		addChild(game);
 	}
 
+	public function selectPlayer() {
+		//Tween out menu
+		Starling.juggler.tween(getChildAt(0), 0.25, {
+				    transition: Transitions.EASE_OUT,
+						delay: 0.0,
+						alpha: 0.0,
+						onComplete: function() {
+					        removeChildAt(0);
+						}
+		});
+		var playerSelect = new PlayerSelect();
+		playerSelect.alpha = 0;
+		addChild(playerSelect);
+		//Tween in player selection screen
+		Starling.juggler.tween(playerSelect, 0.25, {
+					transition: Transitions.EASE_IN,
+						delay: .25,
+						alpha: 1.0
+		});
+	}
 	public function showTutorial() {
 		//Tween out the menu
 		Starling.juggler.tween(getChildAt(0), 0.25, {
@@ -294,5 +331,41 @@ class Credits extends Sprite {
 		backButton.y = 465;
 		backButton.overState = Root.assets.getTexture("backbuttonhover");
 		backButton.downState = Root.assets.getTexture("backbuttonhover");
+	}
+}
+
+class PlayerSelect extends Sprite {
+
+	public var bg:Image;
+	public var backButton:Button;
+	public var virginia:Button;
+	public var samuel:Button;
+
+	public function new() {
+		super();
+
+		backButton = new Button(Root.assets.getTexture("backbutton"));
+		backButton.name = "back";
+		virginia = new Button(Root.assets.getTexture("virginiabutton"));
+		virginia.name = "player2";
+		samuel = new Button(Root.assets.getTexture("samuelbutton"));
+		samuel.name = "player";
+
+		bg = new Image(Root.assets.getTexture("playerselect"));
+		addChild(bg);
+		this.addChild(backButton);
+		this.addChild(virginia);
+		this.addChild(samuel);
+
+		backButton.x = 570;
+		backButton.y = 465;
+		backButton.overState = Root.assets.getTexture("backbuttonhover");
+		backButton.downState = Root.assets.getTexture("backbuttonhover");
+
+		virginia.x = 510;
+		samuel.x = 690;
+		virginia.y = samuel.y = 180;
+		virginia.overState = virginia.downState = Root.assets.getTexture("virginiabuttonhover");
+		samuel.overState = samuel.downState = Root.assets.getTexture("samuelbuttonhover");
 	}
 }

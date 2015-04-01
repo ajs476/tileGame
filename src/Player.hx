@@ -17,15 +17,17 @@ class Player extends Sprite {
 	public var image:Image;
 	var animation:MovieClipPlus;
 	var direction = "down";
+	var player = "player";
 	public var col = 10;
 	public var row = 5;
 	public var moving = false;
 	public var inventory:Array<String>;
 	public var health:Int;
 
-	public function new() {
+	public function new(player="player") {
 		super();
-		image = new Image(Root.assets.getTexture("player_down"));
+		this.player = player;
+		image = new Image(Root.assets.getTexture(player + "_down"));
 		image.width = 64;
 		image.height = 64;
 		addChild(image);
@@ -40,8 +42,8 @@ class Player extends Sprite {
     	if(dY > 0) direction = "down";
     	if(dY < 0) direction = "up";
     	this.direction = direction;
-    	var atlas = Root.assets.getTextureAtlas("player");
-		animation = new MovieClipPlus(atlas.getTextures("player_walking_" + direction), 8);
+    	var atlas = Root.assets.getTextureAtlas(player);
+		animation = new MovieClipPlus(atlas.getTextures(player +"_walking_" + direction), 8);
 		animation.loop = true;
 		addChild(animation);
 		animation.play();
@@ -56,7 +58,7 @@ class Player extends Sprite {
             onComplete: function() {
             	removeChild(animation);
             	moving = false;
-            	image = new Image(Root.assets.getTexture("player_" + direction));
+            	image = new Image(Root.assets.getTexture(player + "_" + direction));
             	addChild(image);
             }
 		});
