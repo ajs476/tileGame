@@ -3,6 +3,7 @@ import starling.utils.AssetManager;
 import starling.display.Button;
 import starling.animation.Transitions;
 import starling.events.Event;
+import starling.events.EnterFrameEvent;
 import starling.core.Starling;
 import starling.display.Image;
 import starling.display.DisplayObject;
@@ -35,6 +36,9 @@ class Game extends Sprite {
 		
 		//Move camera on keyboard event
 		addEventListener(KeyboardEvent.KEY_DOWN, moveCamera);
+
+		//Add Collision Listener
+		Starling.current.stage.addEventListener(Event.ENTER_FRAME, checkCollision);
 
 		// randomly spawn a bunch of raptors. kill all raptors to win!
 		var raptors:Array<Raptor> = new Array<Raptor>();
@@ -90,6 +94,24 @@ class Game extends Sprite {
 
 		createDialog(["Press space to continue."]);
 
+	}
+
+	function checkCollision(event:EnterFrameEvent) {
+		var i:Int = 0;
+		var playerBounds:Rectangle = player.bounds;
+		while(i<10){
+			var raptorBounds:Rectangle = raptors[i].bounds;
+			if (playerBounds.intersects(raptorBounds)){
+				removeChildren();
+				removeEventListeners();
+				this.x = 0;
+				this.y = 0;
+				Root.assets.playSound("roar", 0, 1);
+				var gameOver = new Image(Root.assets.getTexture("gameOver"));
+				addChild(gameOver);
+			}
+			i = i+1;
+		}
 	}
 	
 	function set_raptors(newX:Array<Raptor>) {
@@ -159,6 +181,7 @@ class Game extends Sprite {
 	}
 
 	public function moveCamera(event:KeyboardEvent) {
+		/*
 		var i:Int = 0;
 		var playerBounds:Rectangle = player.bounds;
 		while(i<10){
@@ -171,6 +194,7 @@ class Game extends Sprite {
 			}
 			i = i+1;
 		}
+		*/
 		if(player.moving) {
 			return;
 		}
