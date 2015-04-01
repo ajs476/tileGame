@@ -41,7 +41,6 @@ class Root extends Sprite {
 		assets.enqueue("assets/menubutton.png");
 		assets.enqueue("assets/menuselect.mp3");
 		assets.enqueue("assets/tutorialBackground.png");
-		assets.enqueue("assets/gameover.png");
 		assets.enqueue("assets/win.png");
 		assets.enqueue("assets/dialog.png");
 		assets.enqueue("assets/font.png");
@@ -292,14 +291,5 @@ class Credits extends Sprite {
 		backButton.y = 465;
 		backButton.overState = Root.assets.getTexture("backbuttonhover");
 		backButton.downState = Root.assets.getTexture("backbuttonhover");
-	}
-}
-
-class GameOver extends Sprite {
-	public var background:Image;
-	public var returnButton:Button;
-
-	public function new() {
-		super();
 	}
 }
