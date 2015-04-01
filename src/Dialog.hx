@@ -15,8 +15,9 @@ class Dialog extends Sprite {
 	public var text:Array<String>;
 	public var textField:TextField;
 	public var currentSlide = 0;
+	public var eventToBeTriggered = "";
 
-	public function new(text:Array<String>) {
+	public function new(text:Array<String>, ?event:String) {
 		super();
 
 		image = new Image(Root.assets.getTexture("dialog"));
@@ -24,6 +25,7 @@ class Dialog extends Sprite {
 		addChild(image);
 
 		this.text = text;
+		this.eventToBeTriggered = event;
 
 		textField = new TextField(1220, 116, text[0], "basicFont", 14, 0xFFFFFF, false);
 		textField.y = Starling.current.stage.stageHeight - 186;
@@ -45,8 +47,9 @@ class Selection extends Sprite{
 	public var current:Int = 0;
 	public var functions:Array<String->Void>;
 	public var textFields:Array<TextField>;
+	public var eventToBeTriggered:String;
 
-	public function new(options:Array<String>, functions:Array<String->Void>) {
+	public function new(options:Array<String>, functions:Array<String->Void>, ?event:String) {
 		super();
 
 		var image = new Image(Root.assets.getTexture("dialog"));
@@ -55,6 +58,7 @@ class Selection extends Sprite{
 
 		this.options = options;
 		this.functions = functions;
+		this.eventToBeTriggered = event;
 
 		textFields = new Array<TextField>();
 		var i = 0;

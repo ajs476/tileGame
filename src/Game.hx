@@ -140,17 +140,16 @@ class Game extends Sprite {
 		addChild(tileMap);
 	}
 
-	public function createDialog(text:Array<String>) {
+	public function createDialog(text:Array<String>, ?event:String) {
 		removeEventListeners();
-		dialog = new Dialog(text);
+		dialog = new Dialog(text, event);
 		addChild(dialog);
 		addEventListener(KeyboardEvent.KEY_DOWN, destroyDialog);
 	}
 
-	public function createSelection(options:Array<String>) {
+	public function createSelection(options:Array<String>, functions:Array<String->Void>, ?event:String) {
 		removeEventListeners();
-		var functions = [function(str:String) { trace(str); }, function(str:String) { trace(str); }];
-		selection = new Selection(options, functions);
+		selection = new Selection(options, functions, event);
 		addChild(selection);
 		addEventListener(KeyboardEvent.KEY_DOWN, destroySelection);
 	}
@@ -161,6 +160,7 @@ class Game extends Sprite {
 			selection.activate();
 			removeChild(selection);
 			addEventListener(KeyboardEvent.KEY_DOWN, moveCamera);
+			triggerEvent(selection.eventToBeTriggered);
 		} else if(event.keyCode == 39) {
 			selection.next();
 		} else if(event.keyCode == 37) {
@@ -174,9 +174,19 @@ class Game extends Sprite {
 				removeEventListeners();
 				removeChild(dialog);
 				addEventListener(KeyboardEvent.KEY_DOWN, moveCamera);
+				triggerEvent(dialog.eventToBeTriggered);
 			} else {
 				dialog.next();
 			}
+		}
+	}
+
+	public function triggerEvent(?event:String) {
+		if(player.row == 5 && player.col == 5 && event == null) {
+			createDialog(["This is a test dialog.", "Press space to continue..."], "selection");
+		}
+		if(player.row == 5 && player.col == 5 && event == "selection") {
+			createSelection(["Option One", "Option Two"], [function (str:String) { trace(str); }, function (str:String) { trace(str); }], "done");
 		}
 	}
 
@@ -292,5 +302,6 @@ class Game extends Sprite {
 			});
 			player.move(0, 0, "down");
 		}
+		triggerEvent();
 	}
 }
