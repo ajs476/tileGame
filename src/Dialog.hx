@@ -48,13 +48,13 @@ class Dialog extends DialogMaster {
 		addEventListener(KeyboardEvent.KEY_DOWN, change);
 	}
 
-	public function change() {
-		if(this.currentSlide == this.text.length - 1) {
-			cast(this.parent, Game).addEventListener(KeyboardEvent.KEY_DOWN, cast(this.parent, Game).moveCamera);
-			activate();
-			cast(this.parent, Game).removeChild(this);
-		} else {
-			next();
+	public function change(event:KeyboardEvent) {
+		if(event.keyCode == 32) {
+			if(this.currentSlide == this.text.length - 1) {
+				destory();
+			} else {
+				next();
+			}
 		}
 	}
 
@@ -70,6 +70,7 @@ class Dialog extends DialogMaster {
 	}
 
 	public function destory() {
+		cast(this.parent, Game).addEventListener(KeyboardEvent.KEY_DOWN, cast(this.parent, Game).moveCamera);
 		activate();
 		cast(this.parent, Game).dialogBuffer.pop();
 		cast(this.parent, Game).removeChild(this);
@@ -105,7 +106,6 @@ class Selection extends DialogMaster{
 			addChild(text);
 			i++;
 		}
-
 		addEventListener(KeyboardEvent.KEY_DOWN, change);
 	}
 

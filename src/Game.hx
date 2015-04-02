@@ -20,6 +20,7 @@ class Game extends Sprite {
 
 	var tileMap:Tilemap;
 	var player:Player;
+	var items:Array<Image>;
 	var cols = 49;
 	var rows = 49;
 	var raptors:Array<Raptor>;
@@ -36,6 +37,7 @@ class Game extends Sprite {
 	public function new() {
 		super();
 		createMap();
+		items = new Array<Image>();
 
 		player = new Player(Root.current_player);
 		player.x = 64 * 10;
@@ -105,6 +107,14 @@ class Game extends Sprite {
 		dialogBuffer = new DialogBuffer();
 		addChild(dialogBuffer);
 		
+
+		//Add items
+		var barrel = new Image(Root.assets.getTexture("barrel"));
+		items.push(barrel);
+		barrel.x = 64 * 5;
+		barrel.y = 64 * 5;
+		addChild(barrel);
+
 		// randomly spawn the same number of missles, pick up a missle to kill raptor (press space to shoot missle)
 		// createMissle();
 		// createMissle();
@@ -140,6 +150,8 @@ class Game extends Sprite {
 			this.x = 0;
 			this.y = 0;
 			var gameOver = new Image(Root.assets.getTexture("gameOver"));
+			gameOver.x = this.x;
+			gameOver.y = this.y;
 			addChild(gameOver);
 		}
 	}
@@ -235,12 +247,10 @@ class Game extends Sprite {
 		//Events are triggered by a condition of some kind
 		//Dialog and Selection screens should then be created in reverse order, as they are added to a stack
 		if(player.row == 5 && player.col == 5 && eventFlags[0] == false) {
-			//Dialogs take an array of strings to display, a function to run on completion, and a string parameter to be passed to that function
-			createDialog(["This is a test dialog.", "Press space to continue..."], function(str:String) { trace(str); }, "Dialog Over.");
 			//Selections take an array of options and an array of functions to run for each option
-			createSelection(["Option One", "Option Two"], [function (str:String) { trace(str); }, function (str:String) { trace(str); }]);
-			//Set event flag to true to prevent event from tiggering twice
-			eventFlags[0] = true;
+			createSelection(["Pick up the gunpowder", "Walk away"], [function (str:String) { createDialog(["You pick up the gunpowder."]); removeChild(items[0]); player.inventory.push(str); eventFlags[0] = true; }, function (str:String) { createDialog(["You walk away."]); }]);
+			//Dialogs take an array of strings to display, a function to run on completion, and a string parameter to be passed to that function
+			createDialog(["Its a barrel of gunpowder."]);
 			//Pop the first thing off the buffer to start the dialog sequence
 			dialogBuffer.pop();
 		}
@@ -277,6 +287,7 @@ class Game extends Sprite {
         		});
 			}
 			player.move(64, 0);
+			triggerEvent();
 		}
 		// D Right  -- change direction of player when hitting an obstacle
 		else if (event.keyCode == 68) {
@@ -288,6 +299,7 @@ class Game extends Sprite {
 					}
 			});
 			player.move(0, 0, "right");
+			triggerEvent();
 		}
 		if(event.keyCode == 87 && player.row > 0 && tileMap._layers[1].data[player.row - 1][player.col] == null) { //W Up
 			if(this.y + 64 <= 0 && /*this.y + (64 * rows) >= Starling.current.stage.stageHeight &&*/ player.row <= rows - 6) { //commented section because it was causing problems with camera moving up when you are near bottom of map
@@ -300,6 +312,7 @@ class Game extends Sprite {
         		});
 			}
 			player.move(0, -64);
+			triggerEvent();
 		}
 		// W Up -- change direction of player when hitting an obstacle
 		else if (event.keyCode == 87) {
@@ -311,6 +324,7 @@ class Game extends Sprite {
 					}
 			});
 			player.move(0, 0, "up");
+			triggerEvent();
 		}
 		if(event.keyCode == 65 && player.col > 0 && tileMap._layers[1].data[player.row][player.col - 1] == null) { //A Left
 			if(this.x + 64 <= 0  && this.x + (64 * cols) >= Starling.current.stage.stageWidth && player.col <= cols - 10) {
@@ -323,6 +337,7 @@ class Game extends Sprite {
         		});
 			}
 			player.move(-64, 0);
+			triggerEvent();
 		}
 		// A Left -- change direction of player when hitting an obstacle
 		else if (event.keyCode == 65) {
@@ -346,6 +361,7 @@ class Game extends Sprite {
         		});
 			}
 			player.move(0, 64, "");
+			triggerEvent();
 		}
 		// S Down -- change direction of player when hitting an obstacle
 		else if (event.keyCode == 83) {
@@ -357,7 +373,7 @@ class Game extends Sprite {
 					}
 			});
 			player.move(0, 0, "down");
+			triggerEvent();
 		}
-		triggerEvent();
 	}
 }

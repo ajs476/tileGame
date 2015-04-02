@@ -27,6 +27,7 @@ class Player extends Sprite {
 	public function new(player="player") {
 		super();
 		this.player = player;
+		inventory = new Array<String>();
 		image = new Image(Root.assets.getTexture(player + "_down"));
 		image.width = 64;
 		image.height = 64;
