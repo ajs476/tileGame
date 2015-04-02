@@ -168,10 +168,7 @@ class Game extends Sprite {
 			Starling.current.stage.removeChild(healthBar4);
 			removeChildren();
 			removeEventListeners();
-			this.x = 0;
-			this.y = 0;
-			var gameOver = new Image(Root.assets.getTexture("gameOver"));
-			addChild(gameOver);
+			gameOver();
 		}
 		playerHealth -= 1;
 		checkHealth();
@@ -179,10 +176,13 @@ class Game extends Sprite {
 		
 	}
 
+	function gameOver() {
+		var gameOver = new Image(Root.assets.getTexture("gameOver"));
+		cast(this.parent, Root).addChild(gameOver);
+		cast(this.parent, Root).removeChild(this);
+	}
+
 	function checkCollision(event:EnterFrameEvent) {
-		
-
-
 		var i:Int = 0;
 		var playerBounds:Rectangle = player.bounds;
 		while(i<10){
@@ -192,11 +192,6 @@ class Game extends Sprite {
 				Starling.current.stage.removeEventListener(Event.ENTER_FRAME, checkCollision);
 				checkHealth();
 				DelayedCall();
-
-
-
-				
-				
 			}
 			i = i+1;
 		}
