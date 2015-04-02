@@ -3,11 +3,13 @@ import starling.utils.AssetManager;
 import starling.display.Button;
 import starling.animation.Transitions;
 import starling.events.Event;
+import starling.events.EnterFrameEvent;
 import starling.core.Starling;
 import starling.display.Image;
 import starling.display.DisplayObject;
 import starling.events.KeyboardEvent;
 import starling.animation.Tween;
+import starling.animation.IAnimatable;
 import flash.geom.Rectangle;
 import Tilemap;
 import Player;
@@ -16,25 +18,55 @@ import Dialog;
 
 class Game extends Sprite {
 
-	var dialog:Dialog;
-	var selection:Selection;
 	var tileMap:Tilemap;
 	var player:Player;
-	var cols = 50;
-	var rows = 50;
+	var items:Array<Image>;
+	var cols = 49;
+	var rows = 49;
 	var raptors:Array<Raptor>;
+	var eventFlags = [false];
+	public var dialogBuffer:DialogBuffer;
+	var playerHealth = 3;
+
+	var delay:IAnimatable;
+	var healthBar1:Image;
+	var healthBar2:Image;
+	var healthBar3:Image;
+	var healthBar4:Image;
 
 	public function new() {
 		super();
 		createMap();
+		items = new Array<Image>();
 
-		player = new Player();
+		player = new Player(Root.current_player);
 		player.x = 64 * 10;
 		player.y = 64 * 5;
 		addChild(player);
+
+		healthBar1 = new Image(Root.assets.getTexture("health1"));
+		healthBar1.x = 0;
+		healthBar1.y = 0;
+		Starling.current.stage.addChild(healthBar1);
+
+		healthBar2 = new Image(Root.assets.getTexture("health2"));
+		healthBar2.x = 0;
+		healthBar2.y = 0;
+
+		healthBar3 = new Image(Root.assets.getTexture("health3"));
+		healthBar3.x = 0;
+		healthBar3.y = 0;
+
+		healthBar4 = new Image(Root.assets.getTexture("health4"));
+		healthBar4.x = 0;
+		healthBar4.y = 0;
+
 		
 		//Move camera on keyboard event
 		addEventListener(KeyboardEvent.KEY_DOWN, moveCamera);
+
+		//Add Collision Listener
+		Starling.current.stage.addEventListener(Event.ENTER_FRAME, checkCollision);
 
 		// randomly spawn a bunch of raptors. kill all raptors to win!
 		var raptors:Array<Raptor> = new Array<Raptor>();
@@ -71,7 +103,18 @@ class Game extends Sprite {
 		
 		
 		set_raptors(raptors);
+
+		dialogBuffer = new DialogBuffer();
+		addChild(dialogBuffer);
 		
+
+		//Add items
+		var barrel = new Image(Root.assets.getTexture("barrel"));
+		items.push(barrel);
+		barrel.x = 64 * 5;
+		barrel.y = 64 * 5;
+		addChild(barrel);
+
 		// randomly spawn the same number of missles, pick up a missle to kill raptor (press space to shoot missle)
 		// createMissle();
 		// createMissle();
@@ -88,8 +131,77 @@ class Game extends Sprite {
 		// createMissle();
 		// createMissle();
 
-		createDialog(["Press space to continue."]);
+	}
 
+	function checkHealth(){
+		if (playerHealth == 3){
+			Starling.current.stage.addChild(healthBar1);
+		}
+		if (playerHealth == 2){
+			Starling.current.stage.addChild(healthBar2);
+		}
+		if (playerHealth == 1){
+			Starling.current.stage.addChild(healthBar3);
+		}
+		if (playerHealth == 0){
+			Starling.current.stage.addChild(healthBar4);
+			removeChildren();
+			removeEventListeners();
+			this.x = 0;
+			this.y = 0;
+			var gameOver = new Image(Root.assets.getTexture("gameOver"));
+			gameOver.x = this.x;
+			gameOver.y = this.y;
+			addChild(gameOver);
+		}
+	}
+
+	function addCollision(){
+		Starling.current.stage.addEventListener(Event.ENTER_FRAME, checkCollision);
+
+	}
+
+	function DelayedCall( ){
+
+		if(playerHealth == 3){
+			Starling.current.stage.removeChild(healthBar1);
+		}
+		if(playerHealth == 2){
+			Starling.current.stage.removeChild(healthBar2);
+		}
+		if(playerHealth == 1){
+			Starling.current.stage.removeChild(healthBar3);
+		}
+		if(playerHealth == 0){
+			Starling.current.stage.removeChild(healthBar4);
+		}
+		playerHealth -= 1;
+		checkHealth();
+		delay = Starling.juggler.delayCall(addCollision, 2);
+		
+	}
+
+	function checkCollision(event:EnterFrameEvent) {
+		
+
+
+		var i:Int = 0;
+		var playerBounds:Rectangle = player.bounds;
+		while(i<10){
+			var raptorBounds:Rectangle = raptors[i].bounds;
+			if (playerBounds.intersects(raptorBounds)){
+				Root.assets.playSound("roar", 0, 0);
+				Starling.current.stage.removeEventListener(Event.ENTER_FRAME, checkCollision);
+				checkHealth();
+				DelayedCall();
+
+
+
+				
+				
+			}
+			i = i+1;
+		}
 	}
 	
 	function set_raptors(newX:Array<Raptor>) {
@@ -118,47 +230,34 @@ class Game extends Sprite {
 		addChild(tileMap);
 	}
 
-	public function createDialog(text:Array<String>) {
+	public function createDialog(text:Array<String>, ?onComplete:String->Void, ?onCompleteParameter:String) {
 		removeEventListeners();
-		dialog = new Dialog(text);
-		addChild(dialog);
-		addEventListener(KeyboardEvent.KEY_DOWN, destroyDialog);
+		var dialog = new Dialog(text, onComplete, onCompleteParameter);
+		dialogBuffer.push(dialog);
 	}
 
-	public function createSelection(options:Array<String>) {
+	public function createSelection(options:Array<String>, functions:Array<String->Void>) {
 		removeEventListeners();
-		var functions = [function(str:String) { trace(str); }, function(str:String) { trace(str); }];
-		selection = new Selection(options, functions);
-		addChild(selection);
-		addEventListener(KeyboardEvent.KEY_DOWN, destroySelection);
+		var selection = new Selection(options, functions);
+		dialogBuffer.push(selection);
 	}
 
-	public function destroySelection(event:KeyboardEvent) {
-		if(event.keyCode == 32) {
-			removeEventListeners();
-			selection.activate();
-			removeChild(selection);
-			addEventListener(KeyboardEvent.KEY_DOWN, moveCamera);
-		} else if(event.keyCode == 39) {
-			selection.next();
-		} else if(event.keyCode == 37) {
-			selection.previous();
-		}
-	}
+	public function triggerEvent() {
 
-	public function destroyDialog(event:KeyboardEvent) {
-		if(event.keyCode == 32) {
-			if(dialog.currentSlide == dialog.text.length - 1) {
-				removeEventListeners();
-				removeChild(dialog);
-				addEventListener(KeyboardEvent.KEY_DOWN, moveCamera);
-			} else {
-				dialog.next();
-			}
+		//Events are triggered by a condition of some kind
+		//Dialog and Selection screens should then be created in reverse order, as they are added to a stack
+		if(player.row == 5 && player.col == 5 && eventFlags[0] == false) {
+			//Selections take an array of options and an array of functions to run for each option
+			createSelection(["Pick up the gunpowder", "Walk away"], [function (str:String) { createDialog(["You pick up the gunpowder."]); removeChild(items[0]); player.inventory.push(str); eventFlags[0] = true; }, function (str:String) { createDialog(["You walk away."]); }]);
+			//Dialogs take an array of strings to display, a function to run on completion, and a string parameter to be passed to that function
+			createDialog(["Its a barrel of gunpowder."]);
+			//Pop the first thing off the buffer to start the dialog sequence
+			dialogBuffer.pop();
 		}
 	}
 
 	public function moveCamera(event:KeyboardEvent) {
+		/*
 		var i:Int = 0;
 		var playerBounds:Rectangle = player.bounds;
 		while(i<10){
@@ -171,6 +270,7 @@ class Game extends Sprite {
 			}
 			i = i+1;
 		}
+		*/
 		if(player.moving) {
 			return;
 		}
@@ -187,6 +287,7 @@ class Game extends Sprite {
         		});
 			}
 			player.move(64, 0);
+			triggerEvent();
 		}
 		// D Right  -- change direction of player when hitting an obstacle
 		else if (event.keyCode == 68) {
@@ -198,6 +299,7 @@ class Game extends Sprite {
 					}
 			});
 			player.move(0, 0, "right");
+			triggerEvent();
 		}
 		if(event.keyCode == 87 && player.row > 0 && tileMap._layers[1].data[player.row - 1][player.col] == null) { //W Up
 			if(this.y + 64 <= 0 && /*this.y + (64 * rows) >= Starling.current.stage.stageHeight &&*/ player.row <= rows - 6) { //commented section because it was causing problems with camera moving up when you are near bottom of map
@@ -210,6 +312,7 @@ class Game extends Sprite {
         		});
 			}
 			player.move(0, -64);
+			triggerEvent();
 		}
 		// W Up -- change direction of player when hitting an obstacle
 		else if (event.keyCode == 87) {
@@ -221,6 +324,7 @@ class Game extends Sprite {
 					}
 			});
 			player.move(0, 0, "up");
+			triggerEvent();
 		}
 		if(event.keyCode == 65 && player.col > 0 && tileMap._layers[1].data[player.row][player.col - 1] == null) { //A Left
 			if(this.x + 64 <= 0  && this.x + (64 * cols) >= Starling.current.stage.stageWidth && player.col <= cols - 10) {
@@ -233,6 +337,7 @@ class Game extends Sprite {
         		});
 			}
 			player.move(-64, 0);
+			triggerEvent();
 		}
 		// A Left -- change direction of player when hitting an obstacle
 		else if (event.keyCode == 65) {
@@ -256,6 +361,7 @@ class Game extends Sprite {
         		});
 			}
 			player.move(0, 64, "");
+			triggerEvent();
 		}
 		// S Down -- change direction of player when hitting an obstacle
 		else if (event.keyCode == 83) {
@@ -267,6 +373,7 @@ class Game extends Sprite {
 					}
 			});
 			player.move(0, 0, "down");
+			triggerEvent();
 		}
 	}
 }
