@@ -145,14 +145,6 @@ class Game extends Sprite {
 		}
 		if (playerHealth == 0){
 			Starling.current.stage.addChild(healthBar4);
-			removeChildren();
-			removeEventListeners();
-			this.x = 0;
-			this.y = 0;
-			var gameOver = new Image(Root.assets.getTexture("gameOver"));
-			gameOver.x = this.x;
-			gameOver.y = this.y;
-			addChild(gameOver);
 		}
 	}
 
@@ -174,6 +166,12 @@ class Game extends Sprite {
 		}
 		if(playerHealth == 0){
 			Starling.current.stage.removeChild(healthBar4);
+			removeChildren();
+			removeEventListeners();
+			this.x = 0;
+			this.y = 0;
+			var gameOver = new Image(Root.assets.getTexture("gameOver"));
+			addChild(gameOver);
 		}
 		playerHealth -= 1;
 		checkHealth();
