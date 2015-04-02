@@ -21,8 +21,8 @@ class Game extends Sprite {
 	var tileMap:Tilemap;
 	var player:Player;
 	var items:Array<Image>;
-	var cols = 49;
-	var rows = 49;
+	var cols = 99;
+	var rows = 99;
 	var raptors:Array<Raptor>;
 	var eventFlags = [false];
 	public var dialogBuffer:DialogBuffer;
@@ -40,8 +40,8 @@ class Game extends Sprite {
 		items = new Array<Image>();
 
 		player = new Player(Root.current_player);
-		player.x = 64 * 10;
-		player.y = 64 * 5;
+		player.x = 64 * player.col;
+		player.y = 64 * player.row;
 		addChild(player);
 
 		healthBar1 = new Image(Root.assets.getTexture("health1"));
@@ -219,7 +219,7 @@ class Game extends Sprite {
 
 	public function createMap() {
 		tileMap = new Tilemap(Root.assets, "map");
-		tileMap.y = 32;
+		tileMap.y = 64;
 		addChild(tileMap);
 	}
 
