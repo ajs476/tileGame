@@ -37,7 +37,7 @@ class Dialog extends DialogMaster {
 		this.onCompleteParameter = onCompleteParameter;
 		this.onComplete = onComplete;
 
-		textField = new TextField(1220, 116, text[0], "basicFont", 14, 0xFFFFFF, false);
+		textField = new TextField(1220, 116, text[0], "font", 20, 0xFFFFFF, false);
 		textField.y = Starling.current.stage.stageHeight - 186;
 		textField.x = 20;
 		textField.hAlign = "left";
@@ -98,9 +98,11 @@ class Selection extends DialogMaster{
 		var i = 0;
 		for(option in options) {
 			var optionText = option;
-			if(i == current) optionText = ":" + option; 
-			var text = new TextField(100, 100, optionText, "basicFont", 14, 0xFFFFFF, false);
-			text.x  = 120 * i + 20;
+			if(i == current) optionText = ">" + option; 
+			var text = new TextField(260, 200, optionText, "font", 20, 0xFFFFFF, false);
+			text.hAlign = "left";
+			text.vAlign = "top";
+			text.x  = 300 * i + 20;
 			text.y = Starling.current.stage.stageHeight - 186;
 			textFields.push(text);
 			addChild(text);
@@ -140,7 +142,7 @@ class Selection extends DialogMaster{
 				i++;
 			}
 			current++;
-			textFields[current].text = ":" + textFields[current].text;
+			textFields[current].text = ">" + textFields[current].text;
 			textFields[current].bold = true;
 		}
 	}
@@ -154,7 +156,7 @@ class Selection extends DialogMaster{
 				i++;
 			}
 			current--;
-			textFields[current].text = ":" + textFields[current].text;
+			textFields[current].text = ">" + textFields[current].text;
 			textFields[current].bold = true;
 		}
 	}
