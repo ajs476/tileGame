@@ -17,13 +17,13 @@ import Dialog;
 
 class Game extends Sprite {
 
-	var dialog:Dialog;
-	var selection:Selection;
 	var tileMap:Tilemap;
 	var player:Player;
-	var cols = 50;
-	var rows = 50;
+	var cols = 49;
+	var rows = 49;
 	var raptors:Array<Raptor>;
+	var eventFlags = [false];
+	public var dialogBuffer:DialogBuffer;
 
 	public function new() {
 		super();
@@ -75,6 +75,9 @@ class Game extends Sprite {
 		
 		
 		set_raptors(raptors);
+
+		dialogBuffer = new DialogBuffer();
+		addChild(dialogBuffer);
 		
 		// randomly spawn the same number of missles, pick up a missle to kill raptor (press space to shoot missle)
 		// createMissle();
@@ -91,8 +94,6 @@ class Game extends Sprite {
 		// createMissle();
 		// createMissle();
 		// createMissle();
-
-		createDialog(["Press space to continue."]);
 
 	}
 
@@ -140,53 +141,31 @@ class Game extends Sprite {
 		addChild(tileMap);
 	}
 
-	public function createDialog(text:Array<String>, ?event:String) {
+	public function createDialog(text:Array<String>, ?onComplete:String->Void, ?onCompleteParameter:String) {
 		removeEventListeners();
-		dialog = new Dialog(text, event);
-		addChild(dialog);
-		addEventListener(KeyboardEvent.KEY_DOWN, destroyDialog);
+		var dialog = new Dialog(text, onComplete, onCompleteParameter);
+		dialogBuffer.push(dialog);
 	}
 
-	public function createSelection(options:Array<String>, functions:Array<String->Void>, ?event:String) {
+	public function createSelection(options:Array<String>, functions:Array<String->Void>) {
 		removeEventListeners();
-		selection = new Selection(options, functions, event);
-		addChild(selection);
-		addEventListener(KeyboardEvent.KEY_DOWN, destroySelection);
+		var selection = new Selection(options, functions);
+		dialogBuffer.push(selection);
 	}
 
-	public function destroySelection(event:KeyboardEvent) {
-		if(event.keyCode == 32) {
-			removeEventListeners();
-			selection.activate();
-			removeChild(selection);
-			addEventListener(KeyboardEvent.KEY_DOWN, moveCamera);
-			triggerEvent(selection.eventToBeTriggered);
-		} else if(event.keyCode == 39) {
-			selection.next();
-		} else if(event.keyCode == 37) {
-			selection.previous();
-		}
-	}
+	public function triggerEvent() {
 
-	public function destroyDialog(event:KeyboardEvent) {
-		if(event.keyCode == 32) {
-			if(dialog.currentSlide == dialog.text.length - 1) {
-				removeEventListeners();
-				removeChild(dialog);
-				addEventListener(KeyboardEvent.KEY_DOWN, moveCamera);
-				triggerEvent(dialog.eventToBeTriggered);
-			} else {
-				dialog.next();
-			}
-		}
-	}
-
-	public function triggerEvent(?event:String) {
-		if(player.row == 5 && player.col == 5 && event == null) {
-			createDialog(["This is a test dialog.", "Press space to continue..."], "selection");
-		}
-		if(player.row == 5 && player.col == 5 && event == "selection") {
-			createSelection(["Option One", "Option Two"], [function (str:String) { trace(str); }, function (str:String) { trace(str); }], "done");
+		//Events are triggered by a condition of some kind
+		//Dialog and Selection screens should then be created in reverse order, as they are added to a stack
+		if(player.row == 5 && player.col == 5 && eventFlags[0] == false) {
+			//Dialogs take an array of strings to display, a function to run on completion, and a string parameter to be passed to that function
+			createDialog(["This is a test dialog.", "Press space to continue..."], function(str:String) { trace(str); }, "Dialog Over.");
+			//Selections take an array of options and an array of functions to run for each option
+			createSelection(["Option One", "Option Two"], [function (str:String) { trace(str); }, function (str:String) { trace(str); }]);
+			//Set event flag to true to prevent event from tiggering twice
+			eventFlags[0] = true;
+			//Pop the first thing off the buffer to start the dialog sequence
+			dialogBuffer.pop();
 		}
 	}
 

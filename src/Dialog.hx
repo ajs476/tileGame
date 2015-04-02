@@ -8,16 +8,25 @@ import starling.display.Image;
 import starling.display.DisplayObject;
 import starling.events.KeyboardEvent;
 import starling.text.TextField;
+import Game;
 
-class Dialog extends Sprite {
+class DialogMaster extends Sprite {
+
+	 public function new() {
+	 	super();
+	 }
+}
+
+class Dialog extends DialogMaster {
 
 	var image:Image;
 	public var text:Array<String>;
 	public var textField:TextField;
 	public var currentSlide = 0;
-	public var eventToBeTriggered = "";
+	public var onComplete:String->Void;
+	public var onCompleteParameter:String;
 
-	public function new(text:Array<String>, ?event:String) {
+	public function new(text:Array<String>, ?onComplete:String->Void, ?onCompleteParameter:String) {
 		super();
 
 		image = new Image(Root.assets.getTexture("dialog"));
@@ -25,7 +34,8 @@ class Dialog extends Sprite {
 		addChild(image);
 
 		this.text = text;
-		this.eventToBeTriggered = event;
+		this.onCompleteParameter = onCompleteParameter;
+		this.onComplete = onComplete;
 
 		textField = new TextField(1220, 116, text[0], "basicFont", 14, 0xFFFFFF, false);
 		textField.y = Starling.current.stage.stageHeight - 186;
@@ -33,23 +43,47 @@ class Dialog extends Sprite {
 		textField.hAlign = "left";
 		textField.vAlign = "top";
 		addChild(textField);
+
+
+		addEventListener(KeyboardEvent.KEY_DOWN, change);
+	}
+
+	public function change() {
+		if(this.currentSlide == this.text.length - 1) {
+			cast(this.parent, Game).addEventListener(KeyboardEvent.KEY_DOWN, cast(this.parent, Game).moveCamera);
+			activate();
+			cast(this.parent, Game).removeChild(this);
+		} else {
+			next();
+		}
 	}
 
 	public function next() {
 		currentSlide++;
 		textField.text = text[currentSlide];
 	}
+
+	public function activate() {
+		if(onCompleteParameter != null) {
+			onComplete(onCompleteParameter);
+		}
+	}
+
+	public function destory() {
+		activate();
+		cast(this.parent, Game).dialogBuffer.pop();
+		cast(this.parent, Game).removeChild(this);
+	}
 }
 
-class Selection extends Sprite{
+class Selection extends DialogMaster{
 
 	public var options:Array<String>;
 	public var current:Int = 0;
 	public var functions:Array<String->Void>;
 	public var textFields:Array<TextField>;
-	public var eventToBeTriggered:String;
 
-	public function new(options:Array<String>, functions:Array<String->Void>, ?event:String) {
+	public function new(options:Array<String>, functions:Array<String->Void>) {
 		super();
 
 		var image = new Image(Root.assets.getTexture("dialog"));
@@ -58,7 +92,6 @@ class Selection extends Sprite{
 
 		this.options = options;
 		this.functions = functions;
-		this.eventToBeTriggered = event;
 
 		textFields = new Array<TextField>();
 		var i = 0;
@@ -72,10 +105,30 @@ class Selection extends Sprite{
 			addChild(text);
 			i++;
 		}
+
+		addEventListener(KeyboardEvent.KEY_DOWN, change);
+	}
+
+	public function change(event:KeyboardEvent) {
+		if(event.keyCode == 32) {
+			destory();
+		} else if(event.keyCode == 39) {
+			next();
+		} else if(event.keyCode == 37) {
+			previous();
+		}
 	}
 
 	public function activate() {
 		functions[current](options[current]);
+	}
+
+	public function destory() {
+		activate();
+		removeEventListeners();
+		cast(this.parent, Game).dialogBuffer.pop();
+		cast(this.parent, Game).addEventListener(KeyboardEvent.KEY_DOWN, cast(this.parent, Game).moveCamera);
+		cast(this.parent, Game).removeChild(this);
 	}
 
 	public function next() {
@@ -103,6 +156,28 @@ class Selection extends Sprite{
 			current--;
 			textFields[current].text = ":" + textFields[current].text;
 			textFields[current].bold = true;
+		}
+	}
+}
+
+class DialogBuffer extends Sprite {
+
+	public var buffer:Array<DialogMaster>;
+
+	public function new() {
+		super();
+		buffer = new Array<DialogMaster>();
+		addEventListener("", pop);
+	}
+
+	public function push(dialog:DialogMaster) {
+		buffer.push(dialog);
+	}
+
+	public function pop() {
+		var popped = buffer.pop();
+		if(popped != null) {
+			cast(this.parent, Game).addChild(popped);
 		}
 	}
 }
