@@ -78,6 +78,10 @@ class Root extends Sprite {
 		assets.enqueue("assets/virginiabuttonhover.png");
 		assets.enqueue("assets/samuelbutton.png");
 		assets.enqueue("assets/samuelbuttonhover.png");
+		assets.enqueue("assets/health1.png");
+		assets.enqueue("assets/health2.png");
+		assets.enqueue("assets/health3.png");
+		assets.enqueue("assets/health4.png");
 
 		assets.enqueue("assets/music1.mp3");
 		assets.enqueue("assets/roar.mp3");

@@ -9,6 +9,7 @@ import starling.display.Image;
 import starling.display.DisplayObject;
 import starling.events.KeyboardEvent;
 import starling.animation.Tween;
+import starling.animation.IAnimatable;
 import flash.geom.Rectangle;
 import Tilemap;
 import Player;
@@ -24,6 +25,13 @@ class Game extends Sprite {
 	var raptors:Array<Raptor>;
 	var eventFlags = [false];
 	public var dialogBuffer:DialogBuffer;
+	var playerHealth = 3;
+
+	var delay:IAnimatable;
+	var healthBar1:Image;
+	var healthBar2:Image;
+	var healthBar3:Image;
+	var healthBar4:Image;
 
 	public function new() {
 		super();
@@ -33,6 +41,24 @@ class Game extends Sprite {
 		player.x = 64 * 10;
 		player.y = 64 * 5;
 		addChild(player);
+
+		healthBar1 = new Image(Root.assets.getTexture("health1"));
+		healthBar1.x = 0;
+		healthBar1.y = 0;
+		Starling.current.stage.addChild(healthBar1);
+
+		healthBar2 = new Image(Root.assets.getTexture("health2"));
+		healthBar2.x = 0;
+		healthBar2.y = 0;
+
+		healthBar3 = new Image(Root.assets.getTexture("health3"));
+		healthBar3.x = 0;
+		healthBar3.y = 0;
+
+		healthBar4 = new Image(Root.assets.getTexture("health4"));
+		healthBar4.x = 0;
+		healthBar4.y = 0;
+
 		
 		//Move camera on keyboard event
 		addEventListener(KeyboardEvent.KEY_DOWN, moveCamera);
@@ -97,19 +123,70 @@ class Game extends Sprite {
 
 	}
 
+	function checkHealth(){
+		if (playerHealth == 3){
+			Starling.current.stage.addChild(healthBar1);
+		}
+		if (playerHealth == 2){
+			Starling.current.stage.addChild(healthBar2);
+		}
+		if (playerHealth == 1){
+			Starling.current.stage.addChild(healthBar3);
+		}
+		if (playerHealth == 0){
+			Starling.current.stage.addChild(healthBar4);
+			removeChildren();
+			removeEventListeners();
+			this.x = 0;
+			this.y = 0;
+			var gameOver = new Image(Root.assets.getTexture("gameOver"));
+			addChild(gameOver);
+		}
+	}
+
+	function addCollision(){
+		Starling.current.stage.addEventListener(Event.ENTER_FRAME, checkCollision);
+
+	}
+
+	function DelayedCall( ){
+
+		if(playerHealth == 3){
+			Starling.current.stage.removeChild(healthBar1);
+		}
+		if(playerHealth == 2){
+			Starling.current.stage.removeChild(healthBar2);
+		}
+		if(playerHealth == 1){
+			Starling.current.stage.removeChild(healthBar3);
+		}
+		if(playerHealth == 0){
+			Starling.current.stage.removeChild(healthBar4);
+		}
+		playerHealth -= 1;
+		checkHealth();
+		delay = Starling.juggler.delayCall(addCollision, 2);
+		
+	}
+
 	function checkCollision(event:EnterFrameEvent) {
+		
+
+
 		var i:Int = 0;
 		var playerBounds:Rectangle = player.bounds;
 		while(i<10){
 			var raptorBounds:Rectangle = raptors[i].bounds;
 			if (playerBounds.intersects(raptorBounds)){
-				removeChildren();
-				removeEventListeners();
-				this.x = 0;
-				this.y = 0;
-				Root.assets.playSound("roar", 0, 1);
-				var gameOver = new Image(Root.assets.getTexture("gameOver"));
-				addChild(gameOver);
+				Root.assets.playSound("roar", 0, 0);
+				Starling.current.stage.removeEventListener(Event.ENTER_FRAME, checkCollision);
+				checkHealth();
+				DelayedCall();
+
+
+
+				
+				
 			}
 			i = i+1;
 		}
