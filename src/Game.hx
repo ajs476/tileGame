@@ -82,31 +82,35 @@ class Game extends Sprite {
 		items.push(barrel);
 		barrel.x = 64 * 90;
 		barrel.y = 64 * 72;
-		tileMap._layers[1].data[91][73] = new Tile();
+		tileMap._layers[1].data[73][91] = new Tile();
 		addChild(barrel);
 
 		barrel = new Image(Root.assets.getTexture("barrel"));
 		items.push(barrel);
 		barrel.x = 64 * 82;
 		barrel.y = 64 * 19;
+		tileMap._layers[1].data[19][82] = new Tile();
 		addChild(barrel);
 
 		barrel = new Image(Root.assets.getTexture("barrel"));
 		items.push(barrel);
 		barrel.x = 64 * 10;
 		barrel.y = 64 * 9;
+		tileMap._layers[1].data[9][10] = new Tile();
 		addChild(barrel);
 
 		var note = new Image(Root.assets.getTexture("note"));
 		items.push(note);
 		note.x = 64 * 71;
 		note.y = 64 * 76;
+		tileMap._layers[1].data[76][71] = new Tile();
 		addChild(note);
 
 		var lighter = new Image(Root.assets.getTexture("lighter"));
 		items.push(lighter);
 		lighter.x = 64 * 37;
 		lighter.y = 64 * 89;
+		tileMap._layers[1].data[89][37] = new Tile();
 		addChild(lighter);
 
 		var boat = new Image(Root.assets.getTexture("boat"));
@@ -283,7 +287,7 @@ class Game extends Sprite {
 		//Dialog and Selection screens should then be created in reverse order, as they are added to a stack
 		if(((player.row == 72 && player.col == 89)) && eventFlags[0] == false) {
 			//Selections take an array of options and an array of functions to run for each option
-			createSelection(["Pick up the gunpowder", "Walk away"], [function (str:String) { createDialog(["You pick up the gunpowder."]); removeChild(items[0]); tileMap._layers[1].data[91][73] = null; player.inventory.push(str); eventFlags[0] = true; gunpowderAmount++; Root.assets.playSound("pickup"); }, function (str:String) { createDialog(["You walk away."]); }]);
+			createSelection(["Pick up the gunpowder", "Walk away"], [function (str:String) { createDialog(["You pick up the gunpowder."]); removeChild(items[0]); tileMap._layers[1].data[73][91] = null; player.inventory.push(str); eventFlags[0] = true; gunpowderAmount++; Root.assets.playSound("pickup"); }, function (str:String) { createDialog(["You walk away."]); }]);
 			//Dialogs take an array of strings to display, a function to run on completion, and a string parameter to be passed to that function
 			createDialog(["Its a barrel of gunpowder."]);
 			//Pop the first thing off the buffer to start the dialog sequence
@@ -292,7 +296,7 @@ class Game extends Sprite {
 
 		//Second Barrel
 		if(((player.row == 20 && player.col == 81)) && eventFlags[1] == false) {
-			createSelection(["Pick up the gunpowder", "Walk away"], [function (str:String) { createDialog(["You pick up the gunpowder."]); removeChild(items[1]); tileMap._layers[1].data[83][14] = null; player.inventory.push(str); eventFlags[1] = true; gunpowderAmount++; Root.assets.playSound("pickup"); }, function (str:String) { createDialog(["You walk away."]); }]);
+			createSelection(["Pick up the gunpowder", "Walk away"], [function (str:String) { createDialog(["You pick up the gunpowder."]); removeChild(items[1]); tileMap._layers[1].data[19][82] = null; player.inventory.push(str); eventFlags[1] = true; gunpowderAmount++; Root.assets.playSound("pickup"); }, function (str:String) { createDialog(["You walk away."]); }]);
 			createDialog(["Its a barrel of gunpowder."]);
 			dialogBuffer.pop();
 		}
@@ -300,7 +304,7 @@ class Game extends Sprite {
 		//Third Barrel
 		if(((player.row == 9 && player.col == 11) ||  (player.row == 10 && player.col == 11) ||  
 			(player.row == 10  && player.col == 10)) && eventFlags[2] == false) {
-			createSelection(["Pick up the gunpowder", "Walk away"], [function (str:String) { createDialog(["You pick up the gunpowder."]); removeChild(items[2]); tileMap._layers[1].data[10][9] = null; player.inventory.push(str); eventFlags[2] = true; gunpowderAmount++; Root.assets.playSound("pickup");}, function (str:String) { createDialog(["You walk away."]); }]);
+			createSelection(["Pick up the gunpowder", "Walk away"], [function (str:String) { createDialog(["You pick up the gunpowder."]); removeChild(items[2]); tileMap._layers[1].data[9][10] = null; player.inventory.push(str); eventFlags[2] = true; gunpowderAmount++; Root.assets.playSound("pickup");}, function (str:String) { createDialog(["You walk away."]); }]);
 			createDialog(["Its a barrel of gunpowder."]);
 			dialogBuffer.pop();
 		}
@@ -308,7 +312,7 @@ class Game extends Sprite {
 		//Lighter
 		if(((player.row == 89 && player.col == 36) ||  (player.row == 88 && player.col == 36) ||  
 			(player.row == 88  && player.col == 37)) && eventFlags[2] == false) {
-			createSelection(["Pick up the lighter", "Walk away"], [function (str:String) { createDialog(["You pick up the lighter."]); removeChild(items[4]); tileMap._layers[1].data[37][89] = null; player.inventory.push("lighter"); eventFlags[10] = true; Root.assets.playSound("pickup");}, function (str:String) { createDialog(["You walk away."]); }]);
+			createSelection(["Pick up the lighter", "Walk away"], [function (str:String) { createDialog(["You pick up the lighter."]); removeChild(items[4]); tileMap._layers[1].data[89][37] = null; player.inventory.push("lighter"); eventFlags[10] = true; Root.assets.playSound("pickup");}, function (str:String) { createDialog(["You walk away."]); }]);
 			createDialog(["Its a colonial era lighter."]);
 			dialogBuffer.pop();
 		}
@@ -323,7 +327,7 @@ class Game extends Sprite {
 				eventFlags[3] = true;
 
 			} else {
-				createSelection(["Go back."], [function (str:String) { tileMap._layers[1].data[45][55] = new Tile(); tileMap._layers[1].data[46][55] = new Tile(); }]);
+				createSelection(["Go back."], [function (str:String) { tileMap._layers[1].data[55][46] = new Tile(); tileMap._layers[1].data[55][46] = new Tile(); }]);
 				createDialog(["This path leads to the raptor queen's lair.", "You don't look ready to face the raptor queen, perhaps you should wait until you are better prepared."]);
 			}
 			dialogBuffer.pop();
@@ -356,6 +360,7 @@ class Game extends Sprite {
 			var barrel = new Image(Root.assets.getTexture("barrel"));
 			barrel.x = 64 * 47;
 			barrel.y = 64 * 46;
+			addChild(barrel);
 			eventFlags[7] = true;
 		}
 
@@ -364,6 +369,7 @@ class Game extends Sprite {
 			var barrel = new Image(Root.assets.getTexture("barrel"));
 			barrel.x = 64 * 43;
 			barrel.y = 64 * 46;
+			addChild(barrel);
 			eventFlags[8] = true;
 		}
 
@@ -372,6 +378,7 @@ class Game extends Sprite {
 			var barrel = new Image(Root.assets.getTexture("barrel"));
 			barrel.x = 64 * 42;
 			barrel.y = 64 * 45;
+			addChild(barrel);
 			eventFlags[9] = true;
 		}
 

@@ -12,6 +12,8 @@ import Game;
 
 class DialogMaster extends Sprite {
 
+	public var game:Game;
+
 	 public function new() {
 	 	super();
 	 }
@@ -25,7 +27,6 @@ class Dialog extends DialogMaster {
 	public var currentSlide = 0;
 	public var onComplete:String->Void;
 	public var onCompleteParameter:String;
-	public var game:Game;
 
 	public function new(game:Game, text:Array<String>, ?onComplete:String->Void, ?onCompleteParameter:String) {
 		super();
@@ -73,6 +74,7 @@ class Dialog extends DialogMaster {
 	}
 
 	public function destory() {
+		removeEventListeners();
 		game.addEventListener(KeyboardEvent.KEY_DOWN, game.moveCamera);
 		activate();
 		game.dialogBuffer.pop();
@@ -86,7 +88,6 @@ class Selection extends DialogMaster{
 	public var current:Int = 0;
 	public var functions:Array<String->Void>;
 	public var textFields:Array<TextField>;
-	public var game:Game;
 
 	public function new(game:Game, options:Array<String>, functions:Array<String->Void>) {
 		super();
@@ -184,6 +185,7 @@ class DialogBuffer extends Sprite {
 	public function pop() {
 		var popped = buffer.pop();
 		if(popped != null) {
+			popped.game.removeEventListeners();
 			Starling.current.stage.addChild(popped);
 		}
 	}
