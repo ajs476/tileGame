@@ -18,8 +18,8 @@ class Player extends Sprite {
 	var animation:MovieClipPlus;
 	var direction = "down";
 	var player = "player";
-	public var col = 10;
-	public var row = 5;
+	public var col = 79;
+	public var row = 94;
 	public var moving = false;
 	public var inventory:Array<String>;
 	public var health:Int;

@@ -69,40 +69,6 @@ class Game extends Sprite {
 
 		//Add Collision Listener
 		Starling.current.stage.addEventListener(Event.ENTER_FRAME, checkCollision);
-
-		// randomly spawn a bunch of raptors. kill all raptors to win!
-		var raptors:Array<Raptor> = new Array<Raptor>();
-		var raptor0 = new Raptor();
-		raptors[0] = raptor0;
-		createRaptor(raptor0);
-		var raptor1 = new Raptor();
-		raptors[1] = raptor1;
-		createRaptor(raptor1);
-		var raptor2 = new Raptor();
-		raptors[2] = raptor2;
-		createRaptor(raptor2);
-		var raptor3 = new Raptor();
-		raptors[3] = raptor3;
-		createRaptor(raptor3);
-		var raptor4 = new Raptor();
-		raptors[4] = raptor4;
-		createRaptor(raptor4);
-		var raptor5 = new Raptor();
-		raptors[5] = raptor5;
-		createRaptor(raptor5);
-		var raptor6 = new Raptor();
-		raptors[6] = raptor6;
-		createRaptor(raptor6);
-		var raptor7 = new Raptor();
-		raptors[7] = raptor7;
-		createRaptor(raptor7);
-		var raptor8 = new Raptor();
-		raptors[8] = raptor8;
-		createRaptor(raptor8);
-		var raptor9 = new Raptor();
-		raptors[9] = raptor9;
-		createRaptor(raptor9);
-		
 		
 		set_raptors(raptors);
 
