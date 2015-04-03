@@ -105,8 +105,8 @@ class Game extends Sprite {
 
 		var lighter = new Image(Root.assets.getTexture("lighter"));
 		items.push(lighter);
-		note.x = 64 * 37;
-		note.y = 64 * 89;
+		lighter.x = 64 * 37;
+		lighter.y = 64 * 89;
 		addChild(lighter);
 
 		var boat = new Image(Root.assets.getTexture("boat"));
@@ -378,6 +378,14 @@ class Game extends Sprite {
 		//Defeat raptor Queen
 		if(eventFlags[7] && eventFlags[8] && eventFlags[9]) {
 			//Raptor Queen dies
+			var atlas = Root.assets.getTextureAtlas("assets");
+			var animation = new MovieClipPlus(atlas.getTextures("explosion"), 5);
+			animation.x = 64 * 45;
+			animation.y = 64 * 45;
+			animation.loop = false;
+			addChild(animation);
+			animation.play();
+			Starling.juggler.add(animation);
 		}
 	}
 
