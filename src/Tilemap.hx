@@ -18,7 +18,7 @@ enum RenderOrder {
   LeftUp;
 }
 
-private class Tile {
+class Tile {
   public var id:Int;
   public var width:Int;
   public var height:Int;

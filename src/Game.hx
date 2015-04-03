@@ -115,6 +115,7 @@ class Game extends Sprite {
 		items.push(barrel);
 		barrel.x = 64 * 10;
 		barrel.y = 64 * 10;
+		tileMap._layers[1].data[10][10] = new Tile();
 		addChild(barrel);
 
 		// randomly spawn the same number of missles, pick up a missle to kill raptor (press space to shoot missle)
@@ -241,9 +242,12 @@ class Game extends Sprite {
 
 		//Events are triggered by a condition of some kind
 		//Dialog and Selection screens should then be created in reverse order, as they are added to a stack
-		if(player.row == 10 && player.col == 10 && eventFlags[0] == false) {
+		if(((player.row == 11 && player.col == 10) ||  (player.row == 9 && player.col == 10) ||  
+			(player.row == 9  && player.col == 11) ||  (player.row == 9 && player.col == 12) ||  
+			(player.row == 10 && player.col == 11) ||  (player.row == 10 && player.col == 9) ||  
+			(player.row == 11 && player.col == 12) ||  (player.row == 11 && player.col == 11)) && eventFlags[0] == false) {
 			//Selections take an array of options and an array of functions to run for each option
-			createSelection(["Pick up the gunpowder", "Walk away"], [function (str:String) { createDialog(["You pick up the gunpowder."]); removeChild(items[0]); player.inventory.push(str); eventFlags[0] = true; }, function (str:String) { createDialog(["You walk away."]); }]);
+			createSelection(["Pick up the gunpowder", "Walk away"], [function (str:String) { createDialog(["You pick up the gunpowder."]); removeChild(items[0]); tileMap._layers[1].data[10][10] = null; player.inventory.push(str); eventFlags[0] = true; }, function (str:String) { createDialog(["You walk away."]); }]);
 			//Dialogs take an array of strings to display, a function to run on completion, and a string parameter to be passed to that function
 			createDialog(["Its a barrel of gunpowder."]);
 			//Pop the first thing off the buffer to start the dialog sequence
