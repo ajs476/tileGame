@@ -32,61 +32,20 @@ class Root extends Sprite {
 
 		assets = new AssetManager();
 		assets.enqueue("assets/map.tmx");
-		assets.enqueue("assets/startbutton.png");
-		assets.enqueue("assets/startbuttonhover.png");
 		assets.enqueue("assets/lcTitle.png");
-		assets.enqueue("assets/continueButton.png");
-		assets.enqueue("assets/tutorialbutton.png");
-		assets.enqueue("assets/credits.png");
-		assets.enqueue("assets/backbutton.png");
-		assets.enqueue("assets/backbuttonhover.png");
-		assets.enqueue("assets/creditsbutton.png");
-		assets.enqueue("assets/creditsbuttonhover.png");
-		assets.enqueue("assets/menu.png");
-		assets.enqueue("assets/menubutton.png");
+		assets.enqueue("assets/playerselect.png");
+		
 		assets.enqueue("assets/menuselect.mp3");
-		assets.enqueue("assets/tutorialBackground.png");
-		assets.enqueue("assets/win.png");
-		assets.enqueue("assets/dialog.png");
 		assets.enqueue("assets/font.png");
 		assets.enqueue("assets/font.fnt");
 		assets.enqueue("assets/basicFont.png");
 		assets.enqueue("assets/basicFont.fnt");
-		assets.enqueue("assets/player_down.png");
-		assets.enqueue("assets/player_up.png");
-		assets.enqueue("assets/player_left.png");
-		assets.enqueue("assets/player_right.png");
-		assets.enqueue("assets/player.png");
-		assets.enqueue("assets/player.xml");
-		assets.enqueue("assets/player2_down.png");
-		assets.enqueue("assets/player2_up.png");
-		assets.enqueue("assets/player2_left.png");
-		assets.enqueue("assets/player2_right.png");
-		assets.enqueue("assets/player2.png");
-		assets.enqueue("assets/player2.xml");
-		assets.enqueue("assets/raptor_down.png");
-		assets.enqueue("assets/raptor_up.png");
-		assets.enqueue("assets/raptor_left.png");
-		assets.enqueue("assets/raptor_right.png");
-		assets.enqueue("assets/raptor.png");
-		assets.enqueue("assets/raptor.xml");
-		assets.enqueue("assets/tiles.png");
-		assets.enqueue("assets/tiles.xml");
-		assets.enqueue("assets/gameOver.png");
-		assets.enqueue("assets/playerselect.png");
-		assets.enqueue("assets/virginiabutton.png");
-		assets.enqueue("assets/virginiabuttonhover.png");
-		assets.enqueue("assets/samuelbutton.png");
-		assets.enqueue("assets/samuelbuttonhover.png");
-		assets.enqueue("assets/health1.png");
-		assets.enqueue("assets/health2.png");
-		assets.enqueue("assets/health3.png");
-		assets.enqueue("assets/health4.png");
-		assets.enqueue("assets/barrel.png");
-
 		assets.enqueue("assets/music1.mp3");
 		assets.enqueue("assets/roar.mp3");
 		assets.enqueue("assets/menu.mp3");
+
+		assets.enqueue("assets/assets.png");
+		assets.enqueue("assets/assets.xml");
         
 		assets.loadQueue(function onProgress(ratio:Float) {
 			

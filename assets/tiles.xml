@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:048eb910806729055f2aa563a0dd372c:ee0d64c2363c99e694c0dc79452cfb10:8c35c81d6c02a4e8a52d04a540c911af$ -->
+<!-- $TexturePacker:SmartUpdate:6072012857c47674092415fe247d6180:e17250177be462fbfa86aae7c1983340:8c35c81d6c02a4e8a52d04a540c911af$ -->
 <TextureAtlas imagePath="tiles.png">
     <SubTexture name="addingsandleft" x="2" y="2" width="64" height="64"/>
     <SubTexture name="addingsandright" x="68" y="2" width="64" height="64"/>
