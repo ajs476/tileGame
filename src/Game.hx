@@ -36,6 +36,7 @@ class Game extends Sprite {
 	var healthBar3:Image;
 	var healthBar4:Image;
 	var raptorQueen:Image;
+	var bones:Image;
 
 	public function new() {
 		super();
@@ -124,6 +125,16 @@ class Game extends Sprite {
 		raptorQueen.x = 64 * 43;
 		raptorQueen.y = 64 * 44;
 		addChild(raptorQueen);
+
+		bones = new Image(Root.assets.getTexture("bones"));
+		bones.x = 64 * 42;
+		bones.y = 64 * 56;
+		addChild(bones);
+
+		bones = new Image(Root.assets.getTexture("bones"));
+		bones.x = 64 * 75;
+		bones.y = 64 * 76;
+		addChild(bones);
 
 		triggerEvent();
 
