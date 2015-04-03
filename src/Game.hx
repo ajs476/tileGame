@@ -285,7 +285,7 @@ class Game extends Sprite {
 
 		//Intro Scene
 		if(eventFlags[5] == false) {
-			createDialog(["The year is fifteen eighty four...\nYou are a member of John White's expedition to the colony on Roanoke Island.", "Three years ago, a colony was established on this island.\nSince then all contact with the colonists has been lost.", "It's up to you to discover the truth of Roanoke Island and find out what happened to the colonists."]);
+			createDialog(["The year is fifteen eighty seven...\nYou are a member of John White's expedition to the colony on Roanoke Island.", "Three years ago, a colony was established on this island.\nSince then all contact with the colonists has been lost.", "It's up to you to discover the truth of Roanoke Island and find out what happened to the colonists."]);
 			eventFlags[5] = true;
 			dialogBuffer.pop();
 		}
