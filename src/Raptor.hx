@@ -404,11 +404,22 @@ class RaptorHandler {
 
 		raptor = new Raptor();
 		raptor.speed = .2;
-		raptor.col = 17;
-		raptor.row = 63;
+		raptor.col = 30;
+		raptor.row = 60;
 		raptor.x = 64 * raptor.col;
 		raptor.y = 64 * raptor.row;
-		raptor.route = [[raptor.col,raptor.row], [22, 63]];
+		raptor.route = [[raptor.col,raptor.row], [25, 60], [25, 62], [18, 62], [18, 63], [22, 63], [22, 62], [25, 60]];
+		game.raptors.push(raptor);
+		game.addChild(raptor);
+		raptor.patrol();
+
+		raptor = new Raptor();
+		raptor.speed = .2;
+		raptor.col = 21;
+		raptor.row = 50;
+		raptor.x = 64 * raptor.col;
+		raptor.y = 64 * raptor.row;
+		raptor.route = [[raptor.col,raptor.row], [24, 50], [24, 55], [21, 55]];
 		game.raptors.push(raptor);
 		game.addChild(raptor);
 		raptor.patrol();
