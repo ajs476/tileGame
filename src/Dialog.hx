@@ -25,12 +25,15 @@ class Dialog extends DialogMaster {
 	public var currentSlide = 0;
 	public var onComplete:String->Void;
 	public var onCompleteParameter:String;
+	public var game:Game;
 
-	public function new(text:Array<String>, ?onComplete:String->Void, ?onCompleteParameter:String) {
+	public function new(game:Game, text:Array<String>, ?onComplete:String->Void, ?onCompleteParameter:String) {
 		super();
+		this.game = game;
 
 		image = new Image(Root.assets.getTexture("dialog"));
 		image.y = Starling.current.stage.stageHeight - 256;
+		image.x = 0;
 		addChild(image);
 
 		this.text = text;
@@ -70,10 +73,10 @@ class Dialog extends DialogMaster {
 	}
 
 	public function destory() {
-		cast(this.parent, Game).addEventListener(KeyboardEvent.KEY_DOWN, cast(this.parent, Game).moveCamera);
+		game.addEventListener(KeyboardEvent.KEY_DOWN, game.moveCamera);
 		activate();
-		cast(this.parent, Game).dialogBuffer.pop();
-		cast(this.parent, Game).removeChild(this);
+		game.dialogBuffer.pop();
+		Starling.current.stage.removeChild(this);
 	}
 }
 
@@ -83,12 +86,15 @@ class Selection extends DialogMaster{
 	public var current:Int = 0;
 	public var functions:Array<String->Void>;
 	public var textFields:Array<TextField>;
+	public var game:Game;
 
-	public function new(options:Array<String>, functions:Array<String->Void>) {
+	public function new(game:Game, options:Array<String>, functions:Array<String->Void>) {
 		super();
+		this.game = game;
 
 		var image = new Image(Root.assets.getTexture("dialog"));
 		image.y = Starling.current.stage.stageHeight - 256;
+		image.x = 0;
 		addChild(image);
 
 		this.options = options;
@@ -128,9 +134,9 @@ class Selection extends DialogMaster{
 	public function destory() {
 		activate();
 		removeEventListeners();
-		cast(this.parent, Game).dialogBuffer.pop();
-		cast(this.parent, Game).addEventListener(KeyboardEvent.KEY_DOWN, cast(this.parent, Game).moveCamera);
-		cast(this.parent, Game).removeChild(this);
+		game.dialogBuffer.pop();
+		game.addEventListener(KeyboardEvent.KEY_DOWN, game.moveCamera);
+		Starling.current.stage.removeChild(this);
 	}
 
 	public function next() {
@@ -169,7 +175,6 @@ class DialogBuffer extends Sprite {
 	public function new() {
 		super();
 		buffer = new Array<DialogMaster>();
-		addEventListener("", pop);
 	}
 
 	public function push(dialog:DialogMaster) {
@@ -179,7 +184,7 @@ class DialogBuffer extends Sprite {
 	public function pop() {
 		var popped = buffer.pop();
 		if(popped != null) {
-			cast(this.parent, Game).addChild(popped);
+			Starling.current.stage.addChild(popped);
 		}
 	}
 }

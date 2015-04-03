@@ -42,6 +42,8 @@ class Game extends Sprite {
 		player = new Player(Root.current_player);
 		player.x = 64 * player.col;
 		player.y = 64 * player.row;
+		this.x = -64 * (player.col - 10);
+		this.y = -64 * (player.row - 5);
 		addChild(player);
 
 		healthBar1 = new Image(Root.assets.getTexture("health1"));
@@ -111,8 +113,8 @@ class Game extends Sprite {
 		//Add items
 		var barrel = new Image(Root.assets.getTexture("barrel"));
 		items.push(barrel);
-		barrel.x = 64 * 5;
-		barrel.y = 64 * 5;
+		barrel.x = 64 * 10;
+		barrel.y = 64 * 10;
 		addChild(barrel);
 
 		// randomly spawn the same number of missles, pick up a missle to kill raptor (press space to shoot missle)
@@ -225,13 +227,13 @@ class Game extends Sprite {
 
 	public function createDialog(text:Array<String>, ?onComplete:String->Void, ?onCompleteParameter:String) {
 		removeEventListeners();
-		var dialog = new Dialog(text, onComplete, onCompleteParameter);
+		var dialog = new Dialog(this, text, onComplete, onCompleteParameter);
 		dialogBuffer.push(dialog);
 	}
 
 	public function createSelection(options:Array<String>, functions:Array<String->Void>) {
 		removeEventListeners();
-		var selection = new Selection(options, functions);
+		var selection = new Selection(this, options, functions);
 		dialogBuffer.push(selection);
 	}
 
@@ -239,7 +241,7 @@ class Game extends Sprite {
 
 		//Events are triggered by a condition of some kind
 		//Dialog and Selection screens should then be created in reverse order, as they are added to a stack
-		if(player.row == 5 && player.col == 5 && eventFlags[0] == false) {
+		if(player.row == 10 && player.col == 10 && eventFlags[0] == false) {
 			//Selections take an array of options and an array of functions to run for each option
 			createSelection(["Pick up the gunpowder", "Walk away"], [function (str:String) { createDialog(["You pick up the gunpowder."]); removeChild(items[0]); player.inventory.push(str); eventFlags[0] = true; }, function (str:String) { createDialog(["You walk away."]); }]);
 			//Dialogs take an array of strings to display, a function to run on completion, and a string parameter to be passed to that function
