@@ -44,7 +44,7 @@ class Player extends Sprite {
     	if(dY < 0) direction = "up";
     	this.direction = direction;
     	var atlas = Root.assets.getTextureAtlas("assets");
-		animation = new MovieClipPlus(atlas.getTextures(player +"_walking_" + direction), 8);
+		animation = new MovieClipPlus(atlas.getTextures(player +"_walking_" + direction), 18);
 		animation.loop = true;
 		addChild(animation);
 		animation.play();

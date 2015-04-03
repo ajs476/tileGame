@@ -34,6 +34,8 @@ class Root extends Sprite {
 		assets.enqueue("assets/map.tmx");
 		assets.enqueue("assets/lcTitle.png");
 		assets.enqueue("assets/playerselect.png");
+		assets.enqueue("assets/credits.png");
+		assets.enqueue("assets/gameOver.png");
 		
 		assets.enqueue("assets/menuselect.mp3");
 		assets.enqueue("assets/font.png");
