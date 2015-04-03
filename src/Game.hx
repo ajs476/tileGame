@@ -13,6 +13,7 @@ import starling.animation.IAnimatable;
 import flash.geom.Rectangle;
 import Tilemap;
 import Player;
+import Raptor;
 import Dialog;
 
 
@@ -20,7 +21,7 @@ class Game extends Sprite {
 
 	var tileMap:Tilemap;
 	var player:Player;
-	var raptors = new Array<Raptor>();
+	public var raptors = new Array<Raptor>();
 	var items:Array<Image>;
 	var cols = 99;
 	var rows = 99;
@@ -185,82 +186,7 @@ class Game extends Sprite {
 	}
 	
 	function set_raptors() {
-		var raptor = new Raptor();
-		raptor.speed = .4;
-		raptor.col = 72;
-		raptor.row = 81;
-		raptor.x = 64 * raptor.col;
-		raptor.y = 64 * raptor.row;
-		raptor.route = [[72,81], [77, 81], [77, 78], [77, 81]];
-		raptors.push(raptor);
-		addChild(raptor);
-		raptor.patrol();
-
-		raptor = new Raptor();
-		raptor.speed = .4;
-		raptor.col = 72;
-		raptor.row = 72;
-		raptor.x = 64 * raptor.col;
-		raptor.y = 64 * raptor.row;
-		raptor.route = [[72,72], [79, 72]];
-		raptors.push(raptor);
-		addChild(raptor);
-		raptor.patrol();
-
-		raptor = new Raptor();
-		raptor.speed = .4;
-		raptor.col = 86;
-		raptor.row = 68;
-		raptor.x = 64 * raptor.col;
-		raptor.y = 64 * raptor.row;
-		raptor.route = [[raptor.col,raptor.row], [86, 72]];
-		raptors.push(raptor);
-		addChild(raptor);
-		raptor.patrol();
-
-		raptor = new Raptor();
-		raptor.speed = .4;
-		raptor.col = 81;
-		raptor.row = 68;
-		raptor.x = 64 * raptor.col;
-		raptor.y = 64 * raptor.row;
-		raptor.route = [[raptor.col,raptor.row], [81, 72]];
-		raptors.push(raptor);
-		addChild(raptor);
-		raptor.patrol();
-
-		raptor = new Raptor();
-		raptor.speed = .4;
-		raptor.col = 82;
-		raptor.row = 63;
-		raptor.x = 64 * raptor.col;
-		raptor.y = 64 * raptor.row;
-		raptor.route = [[raptor.col,raptor.row], [82, 56], [87, 56], [82, 56]];
-		raptors.push(raptor);
-		addChild(raptor);
-		raptor.patrol();
-
-		raptor = new Raptor();
-		raptor.speed = .3;
-		raptor.col = 79;
-		raptor.row = 52;
-		raptor.x = 64 * raptor.col;
-		raptor.y = 64 * raptor.row;
-		raptor.route = [[raptor.col,raptor.row], [79, 45]];
-		raptors.push(raptor);
-		addChild(raptor);
-		raptor.patrol();
-
-		raptor = new Raptor();
-		raptor.speed = .3;
-		raptor.col = 83;
-		raptor.row = 42;
-		raptor.x = 64 * raptor.col;
-		raptor.y = 64 * raptor.row;
-		raptor.route = [[raptor.col,raptor.row], [83, 48]];
-		raptors.push(raptor);
-		addChild(raptor);
-		raptor.patrol();
+		var raptorHandler = new RaptorHandler(this);
 	}
 
 	public function createMap() {
@@ -356,7 +282,7 @@ class Game extends Sprite {
 		}
 
 		//Place barrel 1
-		if((player.row == 47 && player.col == 47) && eventFlags[7] == false) {
+		if(((player.row == 46 && player.col == 46) || (player.row == 45 && player.col == 47)) && eventFlags[7] == false) {
 			var barrel = new Image(Root.assets.getTexture("barrel"));
 			barrel.x = 64 * 47;
 			barrel.y = 64 * 46;
@@ -365,16 +291,16 @@ class Game extends Sprite {
 		}
 
 		//Place barrel 2
-		if((player.row == 44 && player.col == 46) && eventFlags[8] == false) {
+		if(((player.row == 44 && player.col == 46) || (player.row == 45 && player.col == 47) || (player.row == 43 && player.col == 45)) && eventFlags[8] == false) {
 			var barrel = new Image(Root.assets.getTexture("barrel"));
-			barrel.x = 64 * 43;
-			barrel.y = 64 * 46;
+			barrel.x = 64 * 46;
+			barrel.y = 64 * 43;
 			addChild(barrel);
 			eventFlags[8] = true;
 		}
 
 		//Place barrel 3
-		if((player.row == 46 && player.col == 42) && eventFlags[9] == false) {
+		if(((player.row == 46 && player.col == 42)  || (player.row == 45 && player.col == 43)  || (player.row == 44 && player.col == 42)) && eventFlags[9] == false) {
 			var barrel = new Image(Root.assets.getTexture("barrel"));
 			barrel.x = 64 * 42;
 			barrel.y = 64 * 45;
@@ -386,14 +312,39 @@ class Game extends Sprite {
 		if(eventFlags[7] && eventFlags[8] && eventFlags[9]) {
 			//Raptor Queen dies
 			var atlas = Root.assets.getTextureAtlas("assets");
-			var animation = new MovieClipPlus(atlas.getTextures("explosion"), 5);
-			animation.x = 64 * 45;
-			animation.y = 64 * 45;
-			animation.loop = false;
-			addChild(animation);
-			animation.play();
-			Starling.juggler.add(animation);
+			var animation1 = new MovieClipPlus(atlas.getTextures("explosion"), 5);
+			animation1.x = 64 * 46;
+			animation1.y = 64 * 43;
+			animation1.loop = false;
+			addChild(animation1);
+
+			var animation2 = new MovieClipPlus(atlas.getTextures("explosion"), 5);
+			animation2.x = 64 * 47;
+			animation2.y = 64 * 46;
+			animation2.loop = false;
+			addChild(animation2);
+
+			var animation3 = new MovieClipPlus(atlas.getTextures("explosion"), 5);
+			animation3.x = 64 * 42;
+			animation3.y = 64 * 45;
+			animation3.loop = false;
+			addChild(animation3);
+
+
+			animation1.play();
+			Starling.juggler.add(animation1);
+			animation2.play();
+			Starling.juggler.add(animation2);
+			animation3.play();
+			Starling.juggler.add(animation3);
+
+			Starling.juggler.delayCall(win, 2);			
 		}
+	}
+
+	public function win() {
+		removeEventListeners();
+		createDialog(["You killed the raptor queen! "]);
 	}
 
 	public function moveCamera(event:KeyboardEvent) {
